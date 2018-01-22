@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, Helvetica, Sans-serif;
+  font-size: 14px;
+  background-image: url("bkgd_Main.gif");
+  background-color: #FDEF9F;
+  background-position: center top;
+  background-repeat: repeat-x;
+}
+.container {
+  margin: 15px 15px;
+  background: #fff;
+  width: 100%;
+}
+.innerTable {
+  border: 1px solid #cccccc;
+  margin: 15px 15px;
+  padding: 20px 20px;
+}
+div.headingBar {
+  background-color: rgb(22,135,191);
+  padding: 5px;
+  border: 1px solid black;
+  font-weight: bold;
+  font-size: 13pt;
+  margin: 0 0 15px 0;
+  color: #fff;
+}
+select {
+  font-size: 14px;
+}
+#catalogYear {
+  font-size: 14px;
+}
+#programDiv {
+  font-size: 14px;
+}
+#terms {
+  border: 1px dashed #cccccc;
+  padding: 15px;
+  margin: 0 0 15px 0;
+  background-color: rgb(255, 193, 146);
+}

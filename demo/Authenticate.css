@@ -1,0 +1,35 @@
+.loginContainer {
+  margin: 0px auto;
+  width: 900px;
+  background: #fff;
+  align: center;
+}
+.focusField {
+  border:solid 2px #73A6FF;
+  background:#EFF5FF;
+  color:#000;
+  font-size: 1.1em;
+}
+.idleField {
+  background:#EEE;
+  color: #000000;
+  border: solid 2px #DFDFDF;
+  font-size: 1.1em;
+}
+.errorField {
+  background:#F9C8C7;
+  color: #000000;
+  border: solid 2px #FF4A47;
+  font-size: 1.1em;
+}
+legend {
+  color: #0b77b7;
+  font-size: 1.2em;
+}
+#loginMessage {
+  color: #ff0000;
+  padding-bottom: 20px;
+}
+fieldset.login {
+  padding: 30px;
+}

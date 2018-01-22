@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="output.xsl" ?>
+
+<page>
+  <!-- required -->
+  <formTitle>ARCC Certificate Application eForm</formTitle>
+
+  <!-- Login -->
+  <rdtoken></rdtoken>
+  <login>
+    <starId infd_required="true" infd_name="A StarID is required."></starId>
+    <loginTimestamp></loginTimestamp>
+  </login>
+
+  <lastName infd_name="A last name is required." infd_required="true"></lastName>
+  <firstName infd_name="A first name is required." infd_required="true"></firstName>
+  <middleName></middleName>
+  <fullName></fullName>
+  <techId infd_name="A Tech ID is required." infd_required="true"></techId>
+  <email infd_name="An email address is required." infd_required="true"></email>
+  <phone infd_name="A phone number is required." infd_required="true"></phone>
+  <certName infd_name="A name on certificate is required." infd_required="true"></certName>
+
+  <term infd_name="A term is required." infd_required="true"></term>
+  <year infd_name="A year is required" infd_required="true"></year>
+  <campus infd_name="A campus is required" infd_required="true"></campus>
+  <catalogYear infd_name="A catalog year is required" infd_required="true"></catalogYear>
+
+  <program infd_required="true" infd_name="A program is required"></program>
+
+  <signature>
+    <signatureTimestamp></signatureTimestamp>
+    <signatureConfirm infd_required="true" infd_name="You must agree to all terms and conditions"></signatureConfirm>
+    <signatureString></signatureString>
+  </signature>
+
+  <!-- NOTE: to be removed -->
+  <StateInfo>
+    <UserName>zm7430nd</UserName>
+    <UserGroups>
+    </UserGroups>
+    <CurrentQueueName>ARCC Certificate Application eForm</CurrentQueueName>
+    <Client>
+      <Type>webclient</Type>
+      <Version>7.2.2.256</Version>
+    </Client>
+  </StateInfo>
+</page>
