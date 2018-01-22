@@ -34,7 +34,7 @@
     </xsl:if>
    </head>
    <!-- javascript -->
-   <script language="JavaScript" src="ARCC.js" type="text/javascript">
+   <script language="JavaScript" src="form.js" type="text/javascript">
    </script>
    <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
    </script>
@@ -46,7 +46,7 @@
     <script language="JavaScript" src="framework.js" type="text/javascript">
     </script>
     <link href="framework.css" rel="stylesheet"/>
-    <link href="ARCC.css" rel="stylesheet" type="text/css"/>
+    <link href="form.css" rel="stylesheet" type="text/css"/>
    </xsl:if>
    <!-- login script -->
    <xsl:if test="$viewer = 'FormViewer'">
