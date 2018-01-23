@@ -4,10 +4,12 @@ from lib.parts import *
 
 class eForm:
   """ Component count """
-  _count = {alias(row()): 0, alias(col()): 0, alias(img()): 0, alias(p()): 0, alias(span()): 0, 'custom': 0}
+  _count = {alias(row()): 0, alias(col()): 0, alias(img()): 0, alias(p()): 0, alias(span()): 0, 'custom': 0, 'noId': 0}
 
   """ An eForm object is basically a BeautifulSoup object with a cursor to note where to insert parts """
-  def __init__(self, f='lib/template.xsl', css="form.css", js="form.js"):
+  def __init__(self, css="form.css", js="form.js"):
+    f = 'lib/template.xsl'
+
     _markup = open(f, 'r')
     self.bs = BeautifulSoup(_markup, 'html.parser')
 
@@ -43,6 +45,12 @@ class eForm:
     self._count[alias(part)] = c
 
     return self
+
+  """ Modify current attributes of an id """
+  def modAttr(self, id, attrs):
+    tmp = self.bs.find(id=id)
+    for a in attrs.keys():
+      tmp[a] = attrs[a]
 
   def save(self):
     f = open('demo\output.xsl', 'w')

@@ -41,7 +41,7 @@
     </UserGroups>
     <CurrentQueueName>ARCC Certificate Application eForm</CurrentQueueName>
     <Client>
-      <Type>webclient</Type>
+      <Type>FormViewer</Type>
       <Version>7.2.2.256</Version>
     </Client>
   </StateInfo>

@@ -17,7 +17,7 @@ def findMod(obj, type, attrs, new):
 """ Change id attribute """
 def changeId(tag, i, id):
     tmp = copy.copy(tag)
-    if not isinstance(tmp, str):
+    if not isinstance(tmp, str) and alias(tmp) != "noId":
         if id == "":
             tmp['id'] = alias(tmp) + '-' + str(i)
         else:
@@ -36,6 +36,7 @@ def alias(part):
         return 'p'
     elif str(part).__contains__('<span'):
         return 'span'
+    elif str(part).__contains__('<xsl') or str(part).__contains__('<br') or str(part).__contains__('<hr'):
+        return 'noId'
     else:
         return 'custom'
-

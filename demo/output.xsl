@@ -104,34 +104,12 @@
       <div class="row">
        <div class="container" id="container">
         <div class="innerTable" id="innerTable">
-         <div class="row" id="row-1">
-          <div class="small-12 medium-12 large-12 columns" id="col-1">
-           <img alt="Anoka-Ramsey Community College" id="img-1" src="logo-arcc.svg">
-           </img>
-           <p id="p-1">
-            Certificate Application
-            <p id="p-2">
-             A
-             <img alt="required" id="img-2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=">
-             </img>
-             <span id="span-1">
-              indicates required information
-             </span>
-            </p>
-           </p>
-          </div>
-          <div class="row" id="row-3">
-          </div>
-          <div class="row" id="row-4">
-          </div>
-          <div class="row" id="row-5">
+         <div class="row" id="loginSection">
+          <div class="small-3 medium-5 large-3 columns" id="col-1">
+           <input id="custom-1" type="text">
+           </input>
           </div>
          </div>
-         <div class="row" id="row-2">
-         </div>
-         xyz
-         <h2 class="headingBar" id="acb" onclick="enlarge()">
-         </h2>
         </div>
        </div>
       </div>
