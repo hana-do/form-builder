@@ -2,9 +2,9 @@ from lib.ImageNow import eForm
 from lib.parts import *
 
 t = eForm(css='ARCC.css', js='ARCC.js')
-t.insert(row(), id='loginSection')
-t.insert(col(s=3, m=5, l=3), parent='loginSection')
-t.insert(tag('input', {'type': 'text'}), parent='col-1')
+# t.insert(row(), id='loginSection')
+# t.insert(col(s=3, m=5, l=3), parent='loginSection')
+# t.insert(tag('input', {'type': 'text'}), parent='col-1')
 #
 # t.insert(row())
 # t.insert(col(m=12, l=12), parent='row-1')

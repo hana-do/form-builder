@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
  </xsl:output>
  <xsl:template match="/page">
@@ -124,10 +123,11 @@
                               <label for="starId">Star ID:</label>
                               <br/>
                               <input type="text" name="starId" id="starId" required="true" class="idleField" dbCall_param="1" dbCall="eForm_StarId_Authenticate_MSU_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" tabindex="1">
-                                  <xsl:attribute name="value">
+                                <xsl:attribute name="value">
                                     <xsl:value-of select="//page/login/starId"/>
                                   </xsl:attribute>
                                 </input>
+
 
                             </div>
                           </div>

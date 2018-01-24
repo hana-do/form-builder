@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
  </xsl:output>
  <xsl:template match="/page">
@@ -34,7 +33,7 @@
     </xsl:if>
    </head>
    <!-- javascript -->
-   <script language="JavaScript" src="ARCC.js" type="text/javascript">
+   <script language="JavaScript" src="form.js" type="text/javascript">
    </script>
    <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
    </script>
@@ -46,7 +45,7 @@
     <script language="JavaScript" src="framework.js" type="text/javascript">
     </script>
     <link href="framework.css" rel="stylesheet"/>
-    <link href="ARCC.css" rel="stylesheet" type="text/css"/>
+    <link href="form.css" rel="stylesheet" type="text/css"/>
    </xsl:if>
    <!-- login script -->
    <xsl:if test="$viewer = 'FormViewer'">
@@ -104,12 +103,79 @@
       <div class="row">
        <div class="container" id="container">
         <div class="innerTable" id="innerTable">
-         <div class="row" id="loginSection">
-          <div class="small-3 medium-5 large-3 columns" id="col-1">
-           <input id="custom-1" type="text">
-           </input>
-          </div>
-         </div>
+          <div id="loginSection">
+                    <xsl:if test="$viewer != 'FormViewer'">
+                      <xsl:attribute name="style">display: none;</xsl:attribute>
+                    </xsl:if>
+
+                    <div class="row align-center">
+                      <div class="small-12 medium-10 columns">
+                        <fieldset class="login">
+                          <legend>Star ID Authentication</legend>
+                          <div class="row">
+                            <div class="small-12 columns">
+                              <p>To view and complete this form you must log in with your Star ID credentials.</p>
+                              <p>If you do not know your Star ID credentials please contact your school's help desk.</p>
+                            </div>
+
+                            <!-- starID -->
+                            <div class="small-12 columns">
+                              <label for="starId">Star ID:</label>
+                              <br/>
+                              <input type="text" name="starId" id="starId" class="idleField" dbCall_param="1" dbCall="eForm_StarId_Authenticate_Mnscu_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" required="true">
+                                <xsl:attribute name="value">
+                                  <xsl:value-of select="//page/login/starId"/>
+                                </xsl:attribute>
+                              </input>
+                            </div>
+
+                            <!-- password -->
+                            <div class="small-12 columns">
+                              <label for="starId">Star ID Password:</label>
+                              <br/>
+                              <input type="password" name="starPassword" id="starPassword" class="idleField" dbCall_param="2" dbCall="eForm_StarId_Authenticate_Mnscu_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" onKeyPress="return loginSubmitter(this, event);" required="true"/>
+                            </div>
+
+                            <!-- message -->
+                            <div class="small-12 columns">
+                              <span id="loginMessage" style="color: #FF1414;"/>
+                            </div>
+                          </div>
+
+                          <!-- login button -->
+                          <button type="button" class="button" id="authLogin" name="login">
+                            <xsl:attribute name="onClick">
+                              authenticateAndLookup(this, '<xsl:value-of select="StateInfo/Client/Type"/>');
+                            </xsl:attribute>
+                            Verify Credentials
+                          </button>
+
+                          <!-- hidden funtions -->
+                          <input type="button" id="btnRunAuthentication" style="display:none;" dbCall_onClick="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="curAttempts" nam="curAttempts" value="1"/>
+                          <input type="hidden" id="enableSaveOnAuth" name="enableSaveOnAuth" value="AuthOnly"/>
+                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_Mnscu_CLI" dbSet_param="1"/>
+                          <input type="hidden" id="maxAttemptsAuthAndLookup" name="maxAttemptsAuthAndLookup" value="3"/>
+                          <input type="hidden" id="maxAttemptsAuthOnly" name="maxAttemptsAuthOnly" value="10"/>
+                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+
+                          <input type="hidden" id="rdtoken" name="rdtoken">
+                            <xsl:attribute name="value">
+                              <xsl:value-of select="//page/rdtoken"/>
+                            </xsl:attribute>
+                          </input>
+
+                          <input type="hidden" id="loginTimestamp" name="loginTimestamp">
+                            <xsl:attribute name="value">
+                              <xsl:value-of select="//page/login/loginTimestamp"/>
+                            </xsl:attribute>
+                          </input>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
         </div>
        </div>
       </div>

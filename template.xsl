@@ -123,18 +123,70 @@
                             <div class="small-12 columns">
                               <label for="starId">Star ID:</label>
                               <br/>
-                              <input type="text" name="starId" id="starId" required="true" class="idleField" dbCall_param="1" dbCall="eForm_StarId_Authenticate_MSU_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" tabindex="1">
-                                  <xsl:attribute name="value">
-                                    <xsl:value-of select="//page/login/starId"/>
-                                  </xsl:attribute>
-                                </input>
+                              <input type="text" name="starId" id="starId" class="idleField" dbCall_param="1"
+                                     dbCall="eForm_StarId_Authenticate_Mnscu_CLI" onfocus="setActiveField(this);"
+                                     onblur="setInactiveField(this);" required="true">
+                                <xsl:attribute name="value">
+                                  <xsl:value-of select="//page/login/starId"/>
+                                </xsl:attribute>
+                              </input>
+                            </div>
 
+                            <!-- password -->
+                            <div class="small-12 columns">
+                              <label for="starId">Star ID Password:</label>
+                              <br/>
+                              <input type="password" name="starPassword" id="starPassword" class="idleField"
+                                     dbCall_param="2" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"
+                                     onfocus="setActiveField(this);" onblur="setInactiveField(this);"
+                                     onKeyPress="return loginSubmitter(this, event);" required="true"/>
+                            </div>
+
+                            <!-- message -->
+                            <div class="small-12 columns">
+                              <span id="loginMessage" style="color: #FF1414;"></span>
                             </div>
                           </div>
+
+                          <!-- login button -->
+                          <button type="button" class="button" id="authLogin" name="login">
+                            <xsl:attribute name="onClick">
+                              authenticateAndLookup(this, '<xsl:value-of select="StateInfo/Client/Type"/>');
+                            </xsl:attribute>
+                            Verify Credentials
+                          </button>
+
+                          <!-- hidden funtions -->
+                          <input type="button" id="btnRunAuthentication" style="display:none;"
+                                 dbCall_onClick="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup"
+                                 dbCall_param="5" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="curAttempts" nam="curAttempts" value="1"/>
+                          <input type="hidden" id="enableSaveOnAuth" name="enableSaveOnAuth" value="AuthOnly"/>
+                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4"
+                                 dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue"
+                                 dbSet="eForm_StarId_Authenticate_Mnscu_CLI" dbSet_param="1"/>
+                          <input type="hidden" id="maxAttemptsAuthAndLookup" name="maxAttemptsAuthAndLookup" value="3"/>
+                          <input type="hidden" id="maxAttemptsAuthOnly" name="maxAttemptsAuthOnly" value="10"/>
+                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3"
+                                 dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+
+                          <input type="hidden" id="rdtoken" name="rdtoken">
+                            <xsl:attribute name="value">
+                              <xsl:value-of select="//page/rdtoken"/>
+                            </xsl:attribute>
+                          </input>
+
+                          <input type="hidden" id="loginTimestamp" name="loginTimestamp">
+                            <xsl:attribute name="value">
+                              <xsl:value-of select="//page/login/loginTimestamp"/>
+                            </xsl:attribute>
+                          </input>
                         </fieldset>
                       </div>
                     </div>
-          </div>
+                  </div>
         </div>
        </div>
       </div>
