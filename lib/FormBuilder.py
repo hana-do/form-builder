@@ -20,9 +20,9 @@ class eForm:
 
     """ Modify css and js file names """
     _el = self.doc.xpath("//*[@href=$href]", href='form.css')[0]
-    _el.attrib['id'] = css
+    _el.attrib['href'] = css
     _el = self.doc.xpath("//*[@src=$src]", src='form.js')[0]
-    _el.attrib['id'] = js
+    _el.attrib['src'] = js
 
     _markup.close()
 
@@ -61,6 +61,23 @@ class eForm:
 
     self._count[alias(tag)] = c
 
+    return self
+
+  def changeAttrById(self, id, opt=0, attrs={}):
+    # default option 0: view only, opt=1: add/modify existing, opt=-1: remove, opt=-2: remove all
+    _el = self.doc.xpath("//*[@id=$id]", id=id)[0]
+
+    if opt == -2:
+      for a in _el.attrib.keys():
+        del _el.attrib[a]
+    else:
+      for a in attrs.keys():
+        if opt == 1:
+          _el.attrib[a] = attrs[a]
+        elif opt == -1:
+          del _el.attrib[a]
+
+    print(_el.attrib)
     return self
 
   def save(self):

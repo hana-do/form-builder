@@ -32,7 +32,7 @@
         </xsl:if>
       </head>
       <!-- javascript -->
-      <script language="JavaScript" src="form.js" type="text/javascript" id="ARCC.js">
+      <script language="JavaScript" src="ARCC.js" type="text/javascript">
    </script>
       <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
    </script>
@@ -44,7 +44,7 @@
         <script language="JavaScript" src="framework.js" type="text/javascript">
     </script>
         <link href="framework.css" rel="stylesheet"/>
-        <link href="form.css" rel="stylesheet" type="text/css" id="ARCC.css"/>
+        <link href="ARCC.css" rel="stylesheet" type="text/css"/>
       </xsl:if>
       <!-- login script -->
       <xsl:if test="$viewer = 'FormViewer'">
@@ -102,6 +102,7 @@
             <div class="row">
               <div class="container" id="container">
                 <div class="innerTable" id="innerTable">
+                  <!-- Logo & Header -->
                   <!-- LOGIN -->
                   <div id="loginSection">
                     <xsl:if test="$viewer != 'FormViewer'">
@@ -166,11 +167,33 @@
                         </fieldset>
                       </div>
                     </div>
-                    <xsl:value-of select="//page/StateInfo/Client/Type"/>
-                    <xsl:value-of select="//page/StateInfo/Client/Type"/>
-                    <div class="row" id="row-1"></div>
-                    <div class="row" id="row-2"></div>
-                    <div class="row" id="row-3"></div>
+                  </div>
+                  <!-- BODY -->
+                  <div id="formSection" style="display:none;">
+                    <!-- display if not formviewer -->
+                    <xsl:if test="$viewer != 'FormViewer'">
+                      <xsl:attribute name="style">display: block;</xsl:attribute>
+                    </xsl:if>
+                    <!-- general info -->
+                    <div class="row" id="general-info">
+                      <div class="small-12 columns">
+                        <xsl:if test="$viewer != 'FormViewer'">
+                          <xsl:attribute name="style">display:none;</xsl:attribute>
+                        </xsl:if>
+                      </div>
+                    </div>
+                    <!-- asterisk -->
+                    <div class="row">
+                      <div class="small-12 columns">
+                        <p>
+                  A
+                  <img alt="required" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII="/>
+                  indicates required information
+                </p>
+                      </div>
+                    </div>
+                    <div id="student-info"><div class="headingBar" id="custom-1">Student Information</div><div class="row columns" id="student-info-content"><div class="small-12 medium-6 large-4 columns" id="col-1"><label for="firstName">First Name:</label><br></br><input id="firstName" name="firstName" readonly="True" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/firstName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-2"><label for="middleName">Middle Name:</label><br></br><input id="middleName" name="middleName" readonly="True" required="False" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/middleName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-3"><label for="lastName">Last Name:</label><br></br><input id="lastName" name="lastName" readonly="True" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/lastName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-4"><label for="techId">Tech ID:</label><br></br><input id="techId" name="techId" readonly="True" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/techId"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-5"><label for="starId">Star ID:</label><br></br><input id="starId" name="starId" readonly="True" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/login/starId"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-6"><label for="email">Email Address:</label><br></br><input id="email" name="email" readonly="False" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/email"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-7"><label for="phone">Phone Number:</label><br></br><input id="phone" name="phone" readonly="False" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/phone"/></xsl:attribute></input></div><div class="small-12 medium-6 large-8 columns" id="col-8"><label for="certName">Name as you would like it to appear on your certificate:</label><br></br><input id="certName" name="certName" readonly="False" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/certName"/></xsl:attribute></input></div></div></div>
+                    <div id="all-that-applies"><div class="headingBar" id="custom-2">Please select all that applies</div><div class="row columns" id="all-that-applies-content"></div></div>
                   </div>
                 </div>
               </div>

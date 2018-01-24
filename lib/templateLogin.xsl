@@ -104,6 +104,8 @@
       <div class="row">
        <div class="container" id="container">
         <div class="innerTable" id="innerTable">
+          <!-- Logo & Header -->
+
           <!-- LOGIN -->
           <div id="loginSection">
             <xsl:if test="$viewer != 'FormViewer'">
@@ -188,6 +190,37 @@
               </div>
             </div>
           </div>
+
+          <!-- BODY -->
+          <div id="formSection" style="display:none;">
+            <!-- display if not formviewer -->
+            <xsl:if test="$viewer != 'FormViewer'">
+              <xsl:attribute name="style">display: block;</xsl:attribute>
+            </xsl:if>
+
+            <!-- general info -->
+            <div class="row" id="general-info">
+              <div class="small-12 columns">
+                <xsl:if test="$viewer != 'FormViewer'">
+                  <xsl:attribute name="style">display:none;</xsl:attribute>
+                </xsl:if>
+              </div>
+            </div>
+
+            <!-- asterisk -->
+            <div class="row">
+              <div class="small-12 columns">
+                <p>
+                  A
+                  <img alt="required"
+                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII="/>
+                  indicates required information
+                </p>
+              </div>
+            </div>
+
+          </div>
+
         </div>
        </div>
       </div>

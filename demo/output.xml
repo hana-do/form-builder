@@ -41,7 +41,7 @@
     </UserGroups>
     <CurrentQueueName>ARCC Certificate Application eForm</CurrentQueueName>
     <Client>
-      <Type>FormViewer</Type>
+      <Type>ImageNow</Type>
       <Version>7.2.2.256</Version>
     </Client>
   </StateInfo>
