@@ -104,37 +104,7 @@
       <div class="row">
        <div class="container" id="container">
         <div class="innerTable" id="innerTable">
-          <div id="loginSection">
-                    <xsl:if test="$viewer != 'FormViewer'">
-                      <xsl:attribute name="style">display: none;</xsl:attribute>
-                    </xsl:if>
 
-                    <div class="row align-center">
-                      <div class="small-12 medium-10 columns">
-                        <fieldset class="login">
-                          <legend>Star ID Authentication</legend>
-                          <div class="row">
-                            <div class="small-12 columns">
-                              <p>To view and complete this form you must log in with your Star ID credentials.</p>
-                              <p>If you do not know your Star ID credentials please contact your school's help desk.</p>
-                            </div>
-
-                            <!-- starID -->
-                            <div class="small-12 columns">
-                              <label for="starId">Star ID:</label>
-                              <br/>
-                              <input type="text" name="starId" id="starId" required="true" class="idleField" dbCall_param="1" dbCall="eForm_StarId_Authenticate_MSU_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" tabindex="1">
-                                  <xsl:attribute name="value">
-                                    <xsl:value-of select="//page/login/starId"/>
-                                  </xsl:attribute>
-                                </input>
-
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div>
-          </div>
         </div>
        </div>
       </div>
