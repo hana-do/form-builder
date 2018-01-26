@@ -17,5 +17,21 @@ t.insert(input(type='text', lbl='Name as you would like it to appear on your cer
 t.insert(container('all-that-applies'), el='formSection')
 t.insert(headingBar('Please select all that applies'), el='all-that-applies-content', pos=-1)
 
+t.insert(row(), id='term-year', el='all-that-applies-content')
+t.insert(col(s=12, m=8, l=8), id='term', el='term-year')
+t.insert(label(txt='1. Term and Year you intend to complete your certification:', required=True), el='term')
+t.insert(radio({'Spring': 'spring', 'Fall': 'fall', 'Summer': 'summer'}, {'name': 'termRadio'}, xmlNode='//page/term', hidden='term', m=4), el='term')
+t.insert(input('text', 'Year:', 'year', '//page/year', required=True, m=4), el='term-year')
+
+t.insert(row(), id='campus-sect', el='all-that-applies-content')
+t.insert(col(m=12, l=12), id='campus', el='campus-sect')
+t.insert(label(txt='2. Campus you intend to complete your certification from:', required=True), el='campus')
+t.insert(radio({'Cambridge (5005)': 'cambridge', 'Coon Rapids (5004)': 'coon'}, {'name': 'campusRadio'}, xmlNode='//page/campus', hidden='campus', l=6), el='campus')
+
+t.insert(row(), id='catalog-sect', el='all-that-applies-content')
+t.insert(col(m=12, l=12), id='catalog', el='catalog-sect')
+t.insert(label(txt='3. According to the college catalog, you may choose to fulfill degree requirements outlined in any single catalog under which you have been enrolled, provided the catalog was in effect no more than four years preceding the date of completion.', required=True), el='catalog')
+
+
 
 t.save()

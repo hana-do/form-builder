@@ -73,6 +73,7 @@ def br():
 
 """ Composite elements """
 def container(id):
+    """ A div that contains a child section for content """
     _el = tag('div', {'id': id})
 
     childId = id + "-content"
@@ -80,11 +81,13 @@ def container(id):
     return _el
 
 def headingBar(txt):
+    """ A heading bar with format for each container """
     _el = tag('div', {'class': 'headingBar'})
     _el.text = txt
     return _el
 
 def input(type, lbl, id, xmlNode, required=True, readonly=False, s=12, m=6, l=4):
+    """ An input field with label that spans small-12 medium-6 large-4 by default """
     _el = col(s, m, l)
 
     # label
@@ -102,3 +105,102 @@ def input(type, lbl, id, xmlNode, required=True, readonly=False, s=12, m=6, l=4)
     _el.append(_child)
 
     return _el
+
+def label(txt, required=True):
+    """ A label with(out) asterisk for an item """
+    _el = tag('p', {'id': 'term-label'})
+    if required == True:
+        _el.append(img())
+    _el.append(span(txt))
+
+    return _el
+
+def radio(items, attrs, xmlNode, hidden, s=12, m=6, l=4):
+    """ Radiobuttons with labels """
+    _result = tag('div', {'class': 'row columns'})
+
+    _count = 0
+    for i in items.keys():
+        _count += 1
+        _tmp_1 = etree.SubElement(_result, "div")
+        _tmp_1.attrib['class'] = 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'
+        etree.SubElement(_tmp_1, "div").attrib['id'] = 'tmp123xyz'
+
+        # input
+        _el = tag('input', {'type': 'radio'})
+        for a in attrs.keys():
+            _el.attrib[a] = attrs[a]
+        _el.attrib['id'] = items[i]
+        _el.attrib['onclick'] = 'setRadioValue(\'' + i + '\', \'' + hidden + '\')'
+
+        _xsl_child = tag('xsl:if', {'test': xmlNode + '=\'' + i + '\''})
+        _xsl_child_1 = tag('xsl:attribute', {'name': 'checked'})
+        _xsl_child_1.text = 'true'
+        _xsl_child.append(_xsl_child_1)
+
+        _el.append(_xsl_child)
+        _tmp = _result.xpath("//*[@id='tmp123xyz']")[0]
+        _tmp.append(_el)
+
+        # items
+        _el_1 = tag('label', {'for': _el.attrib['id']})
+        _el_1.text = i
+        _tmp.append(_el_1)
+
+        # hidden element
+        if _count == len(items.keys()):
+            _hidden = tag('input', {'type': 'hidden', 'name': hidden, 'id': hidden})
+            _xsl_child = tag('xsl:attribute', {'name': 'value'})
+            _xsl_child_1 = tag('xsl:value-of', {'select': xmlNode})
+            _xsl_child.append(_xsl_child_1)
+            _hidden.append(_xsl_child)
+            _tmp.append(_hidden)
+
+        _tmp.attrib['id'] = ''
+
+    return _result
+
+def dropDown(dropDownId, id, xmlNode, attrs):
+    # """ Dropdown with labels """
+    # _result = tag('div', {'class': 'row columns'})
+    #
+    # _count = 0
+    # for i in items.keys():
+    #     _count += 1
+    #     _tmp_1 = etree.SubElement(_result, "div")
+    #     _tmp_1.attrib['class'] = 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'
+    #     etree.SubElement(_tmp_1, "div").attrib['id'] = 'tmp123xyz'
+    #
+    #     # input
+    #     _el = tag('input', {'type': 'radio'})
+    #     for a in attrs.keys():
+    #         _el.attrib[a] = attrs[a]
+    #     _el.attrib['id'] = items[i]
+    #     _el.attrib['onclick'] = 'setRadioValue(\'' + i + '\', \'' + hidden + '\')'
+    #
+    #     _xsl_child = tag('xsl:if', {'test': xmlNode + '=\'' + i + '\''})
+    #     _xsl_child_1 = tag('xsl:attribute', {'name': 'checked'})
+    #     _xsl_child_1.text = 'true'
+    #     _xsl_child.append(_xsl_child_1)
+    #
+    #     _el.append(_xsl_child)
+    #     _tmp = _result.xpath("//*[@id='tmp123xyz']")[0]
+    #     _tmp.append(_el)
+    #
+    #     # items
+    #     _el_1 = tag('label', {'for': _el.attrib['id']})
+    #     _el_1.text = i
+    #     _tmp.append(_el_1)
+    #
+    #     # hidden element
+    #     if _count == len(items.keys()):
+    #         _hidden = tag('input', {'type': 'hidden', 'name': hidden, 'id': hidden})
+    #         _xsl_child = tag('xsl:attribute', {'name': 'value'})
+    #         _xsl_child_1 = tag('xsl:value-of', {'select': xmlNode})
+    #         _xsl_child.append(_xsl_child_1)
+    #         _hidden.append(_xsl_child)
+    #         _tmp.append(_hidden)
+    #
+    #     _tmp.attrib['id'] = ''
+    #
+    # return _result
