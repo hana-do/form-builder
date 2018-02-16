@@ -5,8 +5,33 @@ class eForm:
   """ Component count """
   _count = {alias(row()): 0, alias(col()): 0, alias(img()): 0, alias(p()): 0, alias(span()): 0, 'custom': 0, 'noId': 0}
 
-  def __init__(self, withLogin=True, forMSU=False, css="form.css", js="form.js"):
+  def __init__(self, formName, withLogin=True, forMSU=False, css="form.css", js="form.js"):
+    """ XML """
+    formPath = formName + '/' + formName
+    # initialize xml
+    fxml = open(formPath + '.xml', 'w')
+    ## processing instructions
+    fxml.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+    fxml.write('<?xml-stylesheet type="text/xsl" href="' + formName + '.xsl" ?>\n')
+    fxml.close()
+
+    fxml = open(formPath + '.xml', 'a')
+    ## add nodes
+    xml = etree.Element('page')
+    node = etree.Element('formTitle')
+    node.text = formName
+    xml.append(node)
+
     if withLogin == True:
+      node = etree.Element('rdtoken')
+      xml.append(node)
+
+      # login
+      node = etree.Element('login')
+      etree.SubElement(node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
+      etree.SubElement(node, 'loginTimestamp')
+      xml.append(node)
+
       if forMSU == True:
         f = 'lib/templateLoginMSU.xsl'
       else:
@@ -14,6 +39,23 @@ class eForm:
     else:
       f = 'lib/template.xsl'
 
+    # test
+    node = etree.Element('StateInfo')
+    client = etree.Element('Client')
+    type = etree.Element('Type')
+    type.text = 'ImageNow'
+    client.append(type)
+    node.append(client)
+    xml.append(node)
+
+    queue = etree.Element('CurrentQueueName')
+    queue.text = formName
+    node.append(queue)
+    xml.append(node)
+
+    fxml.write(etree.tostring(xml, pretty_print=True, encoding="unicode"))
+
+    """ XSL """
     _markup = open(f, 'r')
     parser = etree.XMLParser(remove_blank_text=True) # pretty print
     self.doc = etree.parse(_markup, parser)
@@ -80,7 +122,7 @@ class eForm:
     print(_el.attrib)
     return self
 
-  def save(self):
-    f = open('demo\output.xsl', 'w')
+  def save(self, filename):
+    f = open(filename, 'w')
     f.write(etree.tostring(self.doc, pretty_print=True, encoding="unicode"))
     f.close()

@@ -86,7 +86,7 @@ def headingBar(txt):
     _el.text = txt
     return _el
 
-def input(type, lbl, id, xmlNode, required=True, readonly=False, s=12, m=6, l=4):
+def input(type, id, xmlNode, lbl='', required=True, readonly=False, s=12, m=6, l=4):
     """ An input field with label that spans small-12 medium-6 large-4 by default """
     _el = col(s, m, l)
 
@@ -97,7 +97,10 @@ def input(type, lbl, id, xmlNode, required=True, readonly=False, s=12, m=6, l=4)
     _el.append(br())
 
     # input
-    _child = tag('input', {'type': type, 'name': id, 'id': id, 'required': str(required == True), 'readonly': str(readonly == True)})
+    if readonly == False:
+        _child = tag('input', {'type': type, 'name': id, 'id': id, 'required': str(required == True)})
+    else:
+        _child = tag('input', {'type': type, 'name': id, 'id': id, 'required': str(required == True), 'readonly':'True'})
     _xsl = tag('xsl:attribute', {'name': 'value'})
     _xsl_child = tag('xsl:value-of', {'select': xmlNode})
     _xsl.append(_xsl_child)
@@ -159,3 +162,20 @@ def radio(items, attrs, xmlNode, hidden, s=12, m=6, l=4):
         _tmp.attrib['id'] = ''
 
     return _result
+
+def list(items, attrs={}, ordered=False):
+    """ List of items """
+    if ordered == True:
+        _el = tag('ol')
+    else:
+        _el = tag('ul')
+
+    for i in items:
+        _child = tag('li')
+        _child.text = i
+        _el.append(_child)
+
+    for a in attrs.keys():
+        _el.attrib[a] = attrs[a]
+
+    return _el
