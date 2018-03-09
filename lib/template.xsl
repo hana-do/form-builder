@@ -124,9 +124,74 @@
                         </p>
                       </div>
                     </div>
-
+                    <div id="office" style="display:none;">
+                      <xsl:if test="$viewer != 'FormViewer'">
+                        <xsl:attribute name="style">display:block;</xsl:attribute>
+                      </xsl:if>
+                      <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
+                        <font color="#ffffff">Office Section</font>
+                        <span class="headingBarSpan"></span>
+                      </div>
+                      <div class="checks">
+                        <xsl:if test="contains($queue, 'ARCC')">
+                          <xsl:attribute name="class">checks active</xsl:attribute>
+                        </xsl:if>
+                        <div class="row small-12 columns">
+                          <div class="small-6 columns">
+                            <label for="hrSignature">Signature:</label>
+                            <br/>
+                            <input type="text" name="approvedBy" id="approvedBy" readonly="readonly">
+                              <xsl:attribute name="value">
+                                <xsl:value-of select="//page/approvedBy"/>
+                              </xsl:attribute>
+                            </input>
+                          </div>
+                          <div class="small-6 columns">
+                            <label for="hrSignatureDate">Date:</label>
+                            <br/>
+                            <input type="text" name="approvedByDate" id="approvedByDate" readonly="readonly">
+                              <xsl:attribute name="value">
+                                <xsl:value-of select="//page/approvedByDate"/>
+                              </xsl:attribute>
+                            </input>
+                          </div>
+                        </div>
+                        <div class="row small-12 columns">
+                          <div class="small-12 columns">
+                            <xsl:if test="contains($queue, 'ARCC')">
+                              <input type="button" class="button" value="Click Here to Sign this Document" id="btnClickApprove" onClick="getUsersName(this, 'approvedBy');">
+                                <xsl:variable name="approvedBy" select="//page/approvedBy"/>
+                                <xsl:if test="$approvedBy != ''">
+                                  <xsl:attribute name="style">
+                                    display:none;
+                                  </xsl:attribute>
+                                </xsl:if>
+                              </input>
+                              <input type="button" id="btnGetUserInfo" style="display:none;" dbCall_onClick="eForm_User_Name_Lookup"/>
+                              <input type="hidden" id="hdnReturnValue" name="hdnReturnValue" dbSet="eForm_User_Name_Lookup" dbSet_param="1"/>
+                              <input type="hidden" id="userId" name="userId" dbCall_param="1" dbCall="eForm_User_Name_Lookup">
+                                <xsl:attribute name="value">
+                                  <xsl:value-of select="StateInfo/UserName"/>
+                                </xsl:attribute>
+                              </input>
+                            </xsl:if>
+                          </div>
+                        </div>
+                        <div class="row small-12 columns">
+                          <div class="small-12 columns">
+                            <label for="approvedByNotes">Internal Comments/Notes:</label>
+                            <br/>
+                            <textarea name="approvedByNotes" id="approvedByNotes" rows="3" cols="90">
+                              <xsl:value-of select="//page/approvedByNotes"/>
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div style='border-top: 1px solid #cccccc;'></div>
+                      </div>
+                    </div>
                   </div>
-
                 </div>
               </div>
             </div>

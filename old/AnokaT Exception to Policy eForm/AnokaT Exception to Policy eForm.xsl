@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
   </xsl:output>
   <xsl:template match="/page">
@@ -13,8 +12,7 @@
         <xsl:if test="$viewer != 'WebNow'">
           <meta content="ie-edge;" http-equiv="x-ua-compatible"/>
           <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-          <style>
-            <!-- iPhone Jumping Issue -->
+          <style><!-- iPhone Jumping Issue -->
             @media only screen and (min-device-width : 375px) and (max-device-width : 667px) {
               html,body {
                 -webkit-overflow-scrolling : touch !important;
@@ -34,7 +32,7 @@
         </xsl:if>
       </head>
       <!-- javascript -->
-      <script language="JavaScript" src="form.js" type="text/javascript">
+      <script language="JavaScript" src="anokatExceptionToPolicy.js" type="text/javascript">
       </script>
       <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
       </script>
@@ -46,7 +44,7 @@
         <script language="JavaScript" src="framework.js" type="text/javascript">
         </script>
         <link href="framework.css" rel="stylesheet"/>
-        <link href="form.css" rel="stylesheet" type="text/css"/>
+        <link href="anokatExceptionToPolicy.css" rel="stylesheet" type="text/css"/>
       </xsl:if>
       <!-- login script -->
       <xsl:if test="$viewer = 'FormViewer'">
@@ -99,14 +97,14 @@
         <form data-abide="data-abide" data-enable-shim="true" id="form">
           <xsl:if test="$viewer != 'WebNow'">
             <div class="row">
+              <div id="anokat-header"><div class="row columns" id="anokat-header-content"><h1 id="custom-1">Exception to Policy Appeal</h1></div></div>
               <div class="container" id="container">
+                <div id="logo-header"><div class="row columns" id="logo-header-content"><img alt="Anoka Technical College" src="anokat_logo.jpg" id="img-1"></img></div></div>
                 <div class="innerTable" id="innerTable">
-
                   <div id="loginSection">
                     <xsl:if test="$viewer != 'FormViewer'">
                       <xsl:attribute name="style">display: none;</xsl:attribute>
                     </xsl:if>
-
                     <div class="row align-center">
                       <div class="small-12 medium-10 columns">
                         <fieldset class="login">
@@ -116,8 +114,6 @@
                               <p>To view and complete this form you must log in with your Star ID credentials.</p>
                               <p>If you do not know your Star ID credentials please contact your school's help desk.</p>
                             </div>
-
-                            <!-- starID -->
                             <div class="small-12 columns">
                               <label for="starId">Star ID:</label>
                               <br/>
@@ -127,45 +123,34 @@
                                 </xsl:attribute>
                               </input>
                             </div>
-
-                            <!-- password -->
                             <div class="small-12 columns">
                               <label for="starId">Star ID Password:</label>
                               <br/>
                               <input type="password" name="starPassword" id="starPassword" class="idleField" dbCall_param="2" dbCall="eForm_StarId_Authenticate_Mnscu_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" onKeyPress="return loginSubmitter(this, event);" required="true"/>
                             </div>
-
-                            <!-- message -->
                             <div class="small-12 columns">
-                              <span id="loginMessage" style="color: #FF1414;"></span>
+                              <span id="loginMessage" style="color: #FF1414;"/>
                             </div>
                           </div>
-
-                          <!-- login button -->
-                          <button type="button" class="button" id="authLogin" name="login">
-                            <xsl:attribute name="onClick">
+                          <button type="button" class="button" id="authLogin" name="login"><xsl:attribute name="onClick">
                               authenticateAndLookup(this, '<xsl:value-of select="StateInfo/Client/Type"/>');
                             </xsl:attribute>
                             Verify Credentials
                           </button>
-
-                          <!-- hidden funtions -->
-                          <input type="button" id="btnRunAuthentication" style="display:none;" dbCall_onClick="eForm_StarId_Authenticate_MSU_CLI"/>
-                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
+                          <input type="button" id="btnRunAuthentication" style="display:none;" dbCall_onClick="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
                           <input type="hidden" id="curAttempts" nam="curAttempts" value="1"/>
                           <input type="hidden" id="enableSaveOnAuth" name="enableSaveOnAuth" value="AuthOnly"/>
-                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
-                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_MSU_CLI" dbSet_param="1"/>
+                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_Mnscu_CLI" dbSet_param="1"/>
                           <input type="hidden" id="maxAttemptsAuthAndLookup" name="maxAttemptsAuthAndLookup" value="3"/>
                           <input type="hidden" id="maxAttemptsAuthOnly" name="maxAttemptsAuthOnly" value="10"/>
-                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
-
+                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
                           <input type="hidden" id="rdtoken" name="rdtoken">
                             <xsl:attribute name="value">
                               <xsl:value-of select="//page/rdtoken"/>
                             </xsl:attribute>
                           </input>
-
                           <input type="hidden" id="loginTimestamp" name="loginTimestamp">
                             <xsl:attribute name="value">
                               <xsl:value-of select="//page/login/loginTimestamp"/>
@@ -175,20 +160,17 @@
                       </div>
                     </div>
                   </div>
-
                   <div id="formSection" style="display:none;">
                     <xsl:if test="$viewer != 'FormViewer'">
                       <xsl:attribute name="style">display: block;</xsl:attribute>
                     </xsl:if>
-
                     <div class="row" id="general-info">
                       <div class="small-12 columns">
                         <xsl:if test="$viewer != 'FormViewer'">
-                          <xsl:attribute name="style">display: none;</xsl:attribute>
+                          <xsl:attribute name="style">display:none;</xsl:attribute>
                         </xsl:if>
                       </div>
                     </div>
-
                     <div class="row">
                       <div class="small-12 columns">
                         <p>
@@ -204,7 +186,7 @@
                       </xsl:if>
                       <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
                         <font color="#ffffff">Office Section</font>
-                        <span class="headingBarSpan"></span>
+                        <span class="headingBarSpan"/>
                       </div>
                       <div class="checks">
                         <xsl:if test="contains($queue, 'ARCC')">
@@ -262,9 +244,11 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div style='border-top: 1px solid #cccccc;'></div>
+                        <div style="border-top: 1px solid #cccccc;"/>
                       </div>
                     </div>
+                    <div id="student-info"><div class="headingBar" id="custom-2">Student Information</div><div class="row columns" id="student-info-content"><div class="small-12 medium-6 large-4 columns" id="col-1"><label for="firstName">First Name:</label><br></br><input id="firstName" name="firstName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/firstName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-2"><label for="middleName">Middle Name:</label><br></br><input id="middleName" name="middleName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/middleName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-3"><label for="lastName">Last Name:</label><br></br><input id="lastName" name="lastName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/lastName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-4"><label for="email">Email Address: </label><br></br><input id="email" name="email" required="True" type="email"><xsl:attribute name="value"><xsl:value-of select="//page/email"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-5"><label for="phone">Phone Number:</label><br></br><input id="phone" name="phone" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/phone"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-6"><label for="add">Street Address:</label><br></br><input id="add" name="add" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/address"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-7"><label for="city">City:</label><br></br><input id="city" name="city" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/city"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-8"><label for="zip">Zip Code:</label><br></br><input id="zip" name="zip" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/zip"/></xsl:attribute></input></div><div style="display:none;" id="hiddenSec"><div class="small-12 medium-6 large-4 columns" id="col-9"><label for="fullName"></label><br></br><input id="fullName" name="fullName" readonly="True" required="True" type="hidden"><xsl:attribute name="value"><xsl:value-of select="//page/fullName"/></xsl:attribute></input></div></div></div></div>
+                    <div id="explanation"><div class="headingBar" id="custom-4">Explanation</div><div class="row columns" id="explanation-content"><p id="p-1">Students submitting an Exception to Policy Appeal must describe in detail the circumstances they faced in the text below. Supporting documentation must be submitted for the appeal to be considered for appeal.</p><textarea id="custom-5"></textarea><p id="p-2">Year and Term requesting to appeal.</p><div id="term-year"><div class="row columns" id="term-year-content"></div><p id="term-label"><img alt="required" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII="></img><span>Semester: </span></p><div class="row columns" id="row-6"><div class="small-12 medium-12 large-12 columns"><div id=""><input type="radio" name="termRadio" id="fall" onclick="setRadioValue('Fall', 'term')"><xsl:if test="//page/term='Fall'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="fall">Fall</label></div></div><div class="small-12 medium-12 large-12 columns"><div id=""><input type="radio" name="termRadio" id="spring" onclick="setRadioValue('Spring', 'term')"><xsl:if test="//page/term='Spring'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="spring">Spring</label></div></div><div class="small-12 medium-12 large-12 columns"><div id=""><input type="radio" name="termRadio" id="summer" onclick="setRadioValue('Summer', 'term')"><xsl:if test="//page/term='Summer'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="summer">Summer</label><input id="term" name="term" type="hidden"><xsl:attribute name="value"><xsl:value-of select="//page/term"/></xsl:attribute></input></div></div></div><div class="small-12 medium-6 large-4 columns" id="col-10"><label for="year">Year:</label><br></br><input id="year" name="year" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/year"/></xsl:attribute></input></div></div><p id="p-3">Appeal Information</p><div id="request"><div class="row columns" id="request-content"></div><p id="term-label"><img alt="required" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII="></img><span>I am requesting: </span></p><div class="row columns" id="row-8"><div class="small-12 medium-6 large-6 columns"><div id=""><input type="radio" name="requestRadio" id="withdrawal" onclick="setRadioValue('Late withdrawal from course(s) with potential refund.', 'request')"><xsl:if test="//page/request='Late withdrawal from course(s) with potential refund.'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="withdrawal">Late withdrawal from course(s) with potential refund.</label></div></div><div class="small-12 medium-6 large-6 columns"><div id=""><input type="radio" name="requestRadio" id="drop" onclick="setRadioValue('Late drop (ONLY applicable for course(s) that never attended.', 'request')"><xsl:if test="//page/request='Late drop (ONLY applicable for course(s) that never attended.'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="drop">Late drop (ONLY applicable for course(s) that never attended.</label><input id="request" name="request" type="hidden"><xsl:attribute name="value"><xsl:value-of select="//page/request"/></xsl:attribute></input></div></div></div></div><p id="p-4">Please list course(s) for which you are appealing to drop or withdraw below:</p><div id="isReviewed"><div class="row columns" id="isReviewed-content"></div><p id="term-label"><img alt="required" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII="></img><span>Have you reviewed this with an Enrollment Services Staff Member  or Program Advisor? </span></p><div class="row columns" id="row-10"><div class="small-12 medium-6 large-6 columns"><div id=""><input type="radio" name="isReviewedRadio" id="yes" onclick="setRadioValue('Yes', 'isReviewed')"><xsl:if test="//page/isReviewed='Yes'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="yes">Yes</label></div></div><div class="small-12 medium-6 large-6 columns"><div id=""><input type="radio" name="isReviewedRadio" id="no" onclick="setRadioValue('No', 'isReviewed')"><xsl:if test="//page/isReviewed='No'"><xsl:attribute name="checked">true</xsl:attribute></xsl:if></input><label for="no">No</label><input id="isReviewed" name="isReviewed" type="hidden"><xsl:attribute name="value"><xsl:value-of select="//page/isReviewed"/></xsl:attribute></input></div></div></div></div><div class="small-12 medium-6 large-4 columns" id="col-11"><label for="advisor">Name of the Enrollment Services Staff Member or Program Advisor:</label><br></br><input id="advisor" name="advisor" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/advisor"/></xsl:attribute></input></div><p id="p-5">NOTE: Appeals must be submitted complete with detailed statement and supporting documentation of an extenuating circumstance to be reviewed by the committee. Unawareness of college policies/deadline are not extenuating circumstance.</p></div></div>
                   </div>
                 </div>
               </div>

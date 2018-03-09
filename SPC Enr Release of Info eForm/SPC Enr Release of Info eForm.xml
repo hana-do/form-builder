@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="SPC Enr Release of Info eForm.xsl" ?>
+<page>
+  <formTitle>SPC Enr Release of Info eForm</formTitle>
+  <rdtoken/>
+  <login>
+    <starId infd_name="A StarID is required" infd_required="true"/>
+    <loginTimestamp/>
+  </login>
+
+  <firstName></firstName>
+  <middleName></middleName>
+  <lastName></lastName>
+  <techId></techId>
+  <email></email>
+  <fullName></fullName>
+  <name></name>
+  <relationship></relationship>
+
+  <StateInfo>
+    <Client>
+      <Type>ImageNow</Type>
+    </Client>
+    <CurrentQueueName>SPC Enr Release of Info eForm</CurrentQueueName>
+  </StateInfo>
+</page>

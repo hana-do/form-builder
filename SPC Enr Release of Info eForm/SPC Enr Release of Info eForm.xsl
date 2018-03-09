@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
   </xsl:output>
   <xsl:template match="/page">
@@ -13,8 +12,7 @@
         <xsl:if test="$viewer != 'WebNow'">
           <meta content="ie-edge;" http-equiv="x-ua-compatible"/>
           <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-          <style>
-            <!-- iPhone Jumping Issue -->
+          <style><!-- iPhone Jumping Issue -->
             @media only screen and (min-device-width : 375px) and (max-device-width : 667px) {
               html,body {
                 -webkit-overflow-scrolling : touch !important;
@@ -34,7 +32,7 @@
         </xsl:if>
       </head>
       <!-- javascript -->
-      <script language="JavaScript" src="form.js" type="text/javascript">
+      <script language="JavaScript" src="spcInfoRelease.js" type="text/javascript">
       </script>
       <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
       </script>
@@ -46,7 +44,7 @@
         <script language="JavaScript" src="framework.js" type="text/javascript">
         </script>
         <link href="framework.css" rel="stylesheet"/>
-        <link href="form.css" rel="stylesheet" type="text/css"/>
+        <link href="spcInfoRelease.css" rel="stylesheet" type="text/css"/>
       </xsl:if>
       <!-- login script -->
       <xsl:if test="$viewer = 'FormViewer'">
@@ -99,14 +97,14 @@
         <form data-abide="data-abide" data-enable-shim="true" id="form">
           <xsl:if test="$viewer != 'WebNow'">
             <div class="row">
+              <div id="spc-header"><div class="row columns" id="spc-header-content"><h1 id="custom-1">Authorization To Release Student Information</h1></div></div>
               <div class="container" id="container">
+                <div id="logo-header"><div class="row columns" id="logo-header-content"><img alt="Saint Paul College" src="logo.jpg" id="img-1"></img></div></div>
                 <div class="innerTable" id="innerTable">
-
                   <div id="loginSection">
                     <xsl:if test="$viewer != 'FormViewer'">
                       <xsl:attribute name="style">display: none;</xsl:attribute>
                     </xsl:if>
-
                     <div class="row align-center">
                       <div class="small-12 medium-10 columns">
                         <fieldset class="login">
@@ -116,8 +114,6 @@
                               <p>To view and complete this form you must log in with your Star ID credentials.</p>
                               <p>If you do not know your Star ID credentials please contact your school's help desk.</p>
                             </div>
-
-                            <!-- starID -->
                             <div class="small-12 columns">
                               <label for="starId">Star ID:</label>
                               <br/>
@@ -127,45 +123,34 @@
                                 </xsl:attribute>
                               </input>
                             </div>
-
-                            <!-- password -->
                             <div class="small-12 columns">
                               <label for="starId">Star ID Password:</label>
                               <br/>
                               <input type="password" name="starPassword" id="starPassword" class="idleField" dbCall_param="2" dbCall="eForm_StarId_Authenticate_Mnscu_CLI" onfocus="setActiveField(this);" onblur="setInactiveField(this);" onKeyPress="return loginSubmitter(this, event);" required="true"/>
                             </div>
-
-                            <!-- message -->
                             <div class="small-12 columns">
-                              <span id="loginMessage" style="color: #FF1414;"></span>
+                              <span id="loginMessage" style="color: #FF1414;"/>
                             </div>
                           </div>
-
-                          <!-- login button -->
-                          <button type="button" class="button" id="authLogin" name="login">
-                            <xsl:attribute name="onClick">
+                          <button type="button" class="button" id="authLogin" name="login"><xsl:attribute name="onClick">
                               authenticateAndLookup(this, '<xsl:value-of select="StateInfo/Client/Type"/>');
                             </xsl:attribute>
                             Verify Credentials
                           </button>
-
-                          <!-- hidden funtions -->
-                          <input type="button" id="btnRunAuthentication" style="display:none;" dbCall_onClick="eForm_StarId_Authenticate_MSU_CLI"/>
-                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
+                          <input type="button" id="btnRunAuthentication" style="display:none;" dbCall_onClick="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
                           <input type="hidden" id="curAttempts" nam="curAttempts" value="1"/>
                           <input type="hidden" id="enableSaveOnAuth" name="enableSaveOnAuth" value="AuthOnly"/>
-                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
-                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_MSU_CLI" dbSet_param="1"/>
+                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
+                          <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_Mnscu_CLI" dbSet_param="1"/>
                           <input type="hidden" id="maxAttemptsAuthAndLookup" name="maxAttemptsAuthAndLookup" value="3"/>
                           <input type="hidden" id="maxAttemptsAuthOnly" name="maxAttemptsAuthOnly" value="10"/>
-                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
-
+                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_Mnscu_CLI"/>
                           <input type="hidden" id="rdtoken" name="rdtoken">
                             <xsl:attribute name="value">
                               <xsl:value-of select="//page/rdtoken"/>
                             </xsl:attribute>
                           </input>
-
                           <input type="hidden" id="loginTimestamp" name="loginTimestamp">
                             <xsl:attribute name="value">
                               <xsl:value-of select="//page/login/loginTimestamp"/>
@@ -175,20 +160,17 @@
                       </div>
                     </div>
                   </div>
-
                   <div id="formSection" style="display:none;">
                     <xsl:if test="$viewer != 'FormViewer'">
                       <xsl:attribute name="style">display: block;</xsl:attribute>
                     </xsl:if>
-
                     <div class="row" id="general-info">
                       <div class="small-12 columns">
                         <xsl:if test="$viewer != 'FormViewer'">
-                          <xsl:attribute name="style">display: none;</xsl:attribute>
+                          <xsl:attribute name="style">display:none;</xsl:attribute>
                         </xsl:if>
                       </div>
                     </div>
-
                     <div class="row">
                       <div class="small-12 columns">
                         <p>
@@ -204,7 +186,7 @@
                       </xsl:if>
                       <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
                         <font color="#ffffff">Office Section</font>
-                        <span class="headingBarSpan"></span>
+                        <span class="headingBarSpan"/>
                       </div>
                       <div class="checks">
                         <xsl:if test="contains($queue, 'ARCC')">
@@ -262,9 +244,10 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div style='border-top: 1px solid #cccccc;'></div>
+                        <div style="border-top: 1px solid #cccccc;"/>
                       </div>
                     </div>
+                    <div id="student-info"><div class="headingBar" id="custom-2">Student Information</div><div class="row columns" id="student-info-content"><div class="small-12 medium-6 large-4 columns" id="col-1"><label for="firstName">First Name:</label><br></br><input id="firstName" name="firstName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/firstName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-2"><label for="middleName">Middle Name:</label><br></br><input id="middleName" name="middleName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/middleName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-3"><label for="lastName">Last Name:</label><br></br><input id="lastName" name="lastName" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/lastName"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-4"><label for="techId">Tech ID:</label><br></br><input id="techId" name="techId" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/techId"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-5"><label for="displayStarId">Star ID:</label><br></br><input id="displayStarId" name="displayStarId" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/login/starId"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-6"><label for="email">Email Address: </label><br></br><input id="email" name="email" required="True" type="email"><xsl:attribute name="value"><xsl:value-of select="//page/email"/></xsl:attribute></input></div><div style="display:none;" id="hiddenSec"><div class="small-12 medium-6 large-4 columns" id="col-7"><label for="fullName"></label><br></br><input id="fullName" name="fullName" readonly="True" required="True" type="hidden"><xsl:attribute name="value"><xsl:value-of select="//page/fullName"/></xsl:attribute></input></div></div><p id="p-1">A new form must be submitted for each person/department you are releasing your information to.</p><p id="p-2">I hereby authorize Minnesota State Community and Technical College to release and/or orally discuss the education records described below about me to: (list names of both parents, guardians, others).</p><div class="small-12 medium-6 large-4 columns" id="col-8"><label for="name">Name:</label><br></br><input id="name" name="name" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/name"/></xsl:attribute></input></div><div class="small-12 medium-6 large-4 columns" id="col-9"><label for="relationship">Relationship:</label><br></br><input id="relationship" name="relationship" required="True" type="text"><xsl:attribute name="value"><xsl:value-of select="//page/relationship"/></xsl:attribute></input></div></div></div>
                   </div>
                 </div>
               </div>
