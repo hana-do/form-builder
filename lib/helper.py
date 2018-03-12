@@ -1,181 +1,233 @@
 from lxml import etree
 import copy
 
-""" Auto increment """
-def changeId(el, id, num):
-    tmp = copy.copy(el)
-    if alias(tmp) != "noId" and not isinstance(tmp, str) and 'id' not in tmp.attrib:
-        if id == "":
-            tmp.attrib['id'] = alias(tmp) + '-' + str(num)
-        else:
-            tmp.attrib['id'] = id
-    return tmp
-
-""" Get shorthand aliases of components """
-def alias(el):
-    if isinstance(el, str):
-        return 'custom'
-
-    if '<div class="row' in str(etree.tostring(el)):
-        return 'row'
-    elif '<div class="small' in str(etree.tostring(el)):
-        return 'col'
-    elif '<img' in str(etree.tostring(el)):
-        return 'img'
-    elif '<p' in str(etree.tostring(el)):
-        return 'p'
-    elif '<span' in str(etree.tostring(el)):
-        return 'span'
-    elif '<xsl' in str(etree.tostring(el)) or '<br' in str(etree.tostring(el)) or '<hr' in str(etree.tostring(el)):
-        return 'noId'
-    else:
-        return 'custom'
-
-""" Add custom tags """
+"""
+Create an element in HTML
+:param tag_name: HTML tag name
+:param attrs: dictionary of keys and values for attributes
+:return: an etree element
+"""
 def tag(tag_name, attrs={}, txt=''):
     if 'xsl' in tag_name:
-        _el = etree.Element(etree.QName("http://www.w3.org/1999/XSL/Transform", tag_name[4:]), attrs)
+        el = etree.Element(etree.QName("http://www.w3.org/1999/XSL/Transform", tag_name[4:]), attrs)
     else:
-        _el = etree.Element(tag_name, attrs)
+        el = etree.Element(tag_name, attrs)
 
     if tag_name != "xsl:value-of":
-        _el.text = txt
+        el.text = txt
 
-    return _el
+    return el
 
-""" Shortcuts """
-def row():
-    return tag('div', {'class': 'row'})
 
-def col(s=12, m=6, l=4):
-    return tag('div', {'class': 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'})
-
+"""
+Create an image element
+:param src: source of image
+:param alt: alternate text
+:return: an etree element
+"""
 def img(src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=', alt='required'):
     return tag('img', {'src': src, 'alt': alt})
 
-def p(txt=''):
+
+"""
+Create a paragraph element
+:param txt: paragraph text 
+:return: an etree element
+"""
+def p(txt):
     return tag('p', txt=txt)
 
-def span(txt=''):
+"""
+Create an inline text element
+:param txt: inline text 
+:return: an etree element
+"""
+def span(txt):
     return tag('span', txt=txt)
 
-def xslVal(sel):
-    return tag('xsl:value-of', {'select': sel})
+"""
+Create a section for logo and header only
+:param img: source of image for logo
+:param txt: text of header
+:return: an etree element
+"""
+def logo_header(logo_src, logo_txt, header_txt):
+    el = tag('div', {'id': 'logo-header'})
 
-def xslIf(test):
-    return tag('xsl:if', {'test': '$' + test})
+    # logo
+    logo_row = tag('div', {'class': 'row'})
+    logo_col = tag('div', {'class': 'columns', 'align': 'center'})
+    logo = img(src=logo_src, alt=logo_txt)
 
-def xslAttr(name, txt):
-    return tag('xsl:attribute', {name: txt})
+    logo_col.append(logo)
+    logo_row.append(logo_col)
+    el.append(logo_row)
 
+    # header
+    header_row = tag('div', {'class': 'row'})
+    header_col = tag('div', {'class': 'columns'})
+    header = tag('h1', txt=header_txt)
+
+    header_col.append(header)
+    header_row.append(header_col)
+    el.append(header_row)
+
+    return el
+
+"""
+Create a container for other elements with a heading bar
+:param id: id of the container
+:return: an etree element
+"""
+def container(id, txt):
+    el = tag('div', {'id': id})
+
+    # heading bar
+    el.append(tag('div', {'class': 'headingBar'}, txt))
+
+    # content
+    childId = id + "-content"
+    el.append(tag('div', {'class': 'row columns', 'id': childId}))
+
+    return el
+
+"""
+Create a line break
+:return: an etree element
+"""
 def br():
     return tag('br')
 
-""" Composite elements """
-def container(id):
-    """ A div that contains a child section for content """
-    _el = tag('div', {'id': id})
-
-    childId = id + "-content"
-    _el.append(tag('div', {'class': 'row columns', 'id': childId}))
-    return _el
-
-def headingBar(txt):
-    """ A heading bar with format for each container """
-    _el = tag('div', {'class': 'headingBar'})
-    _el.text = txt
-    return _el
-
-def input(type, id, xmlNode, lbl='', required=True, readonly=False, s=12, m=6, l=4):
-    """ An input field with label that spans small-12 medium-6 large-4 by default """
-    _el = col(s, m, l)
+"""
+Create an input element
+:param type: type of input
+:param id: id of input
+:param xmlNode: value node
+:param lbl: label of input
+:param required: required or not
+:param readonly: readonly or not
+:param s: size for small screen
+:param m: size for medium screen
+:param l: size for large screen
+:return: an etree element
+"""
+def input(type, id, xmlNode, lbl, required, readonly, s, m, l):
+    el = tag('div', {'class': 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'})
 
     # label
-    _child = tag('label', {'for': id})
-    _child.text = lbl
-    _el.append(_child)
-    _el.append(br())
+    child = tag('label', {'for': id})
+    child.text = lbl
+    el.append(child)
+    el.append(br())
 
     # input
-    if readonly == False:
-        _child = tag('input', {'type': type, 'name': id, 'id': id, 'required': str(required == True)})
-    else:
-        _child = tag('input', {'type': type, 'name': id, 'id': id, 'required': str(required == True), 'readonly':'True'})
-    _xsl = tag('xsl:attribute', {'name': 'value'})
-    _xsl_child = tag('xsl:value-of', {'select': xmlNode})
-    _xsl.append(_xsl_child)
-    _child.append(_xsl)
-    _el.append(_child)
+    if readonly == False and required == False:
+        child = tag('input', {'type': type, 'name': id, 'id': id})
+    elif (readonly == True and required == True):
+        child = tag('input', {'type': type, 'name': id, 'id': id, 'required': 'True', 'readonly':'True'})
+    elif (readonly == True and required == False):
+        child = tag('input', {'type': type, 'name': id, 'id': id, 'readonly':'True'})
+    elif (readonly == False and required == True):
+        child = tag('input', {'type': type, 'name': id, 'id': id, 'required': 'True'})
 
-    return _el
+    xsl = tag('xsl:attribute', {'name': 'value'})
+    xsl_child = tag('xsl:value-of', {'select': xmlNode})
+    xsl.append(xsl_child)
+    child.append(xsl)
+    el.append(child)
 
-def label(txt, required=True):
-    """ A label with(out) asterisk for an item """
-    _el = tag('p', {'id': 'term-label'})
-    if required == True:
-        _el.append(img())
-    _el.append(span(txt))
+    return el
 
-    return _el
+"""
+Create a textarea element
+:param id: id of textarea
+:param xmlNode: value node
+:param lbl: label of textarea
+:param required: required or not
+:param readonly: readonly or not
+:param row: size of textarea
+:return: an etree element
+"""
+def textarea(id, xmlNode, lbl, required, readonly):
+    el = tag('div', {'class': 'small-12 columns'})
 
-def radio(items, attrs, xmlNode, hidden, s=12, m=6, l=4):
-    """ Radiobuttons with labels """
-    _result = tag('div', {'class': 'row columns'})
+    # label
+    child = tag('label', {'for': id})
+    child.text = lbl
+    el.append(child)
+    el.append(br())
 
-    _count = 0
+    # textarea
+    if readonly == False and required == False:
+        child = tag('textarea', {'name': id, 'id': id, 'rows': '5', 'cols': '60'})
+    elif (readonly == True and required == True):
+        child = tag('textarea', {'name': id, 'id': id, 'required': 'True', 'readonly':'True', 'rows': '5', 'cols': '60'})
+    elif (readonly == True and required == False):
+        child = tag('textarea', {'name': id, 'id': id, 'readonly':'True', 'rows': '5', 'cols': '60'})
+    elif (readonly == False and required == True):
+        child = tag('textarea', {'name': id, 'id': id, 'required': 'True', 'rows': '5', 'cols': '60'})
+
+    xsl = tag('xsl:value-of', {'select': xmlNode})
+    child.append(xsl)
+    el.append(child)
+
+    return el
+
+"""
+Create group of radiobuttons with label
+:param items: dictionary of labels as keys and ids as values
+:param attrs: 
+:param xmlNode: 
+:param hidden: 
+:param s: 
+:param m: 
+:param l: 
+:return: an etree element
+"""
+def radio(items, attrs, xmlNode, hidden, lbl, s=12, m=6, l=4):
+    result = tag('div', {'class': 'row columns'})
+
     for i in items.keys():
-        _count += 1
-        _tmp_1 = etree.SubElement(_result, "div")
-        _tmp_1.attrib['class'] = 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'
-        etree.SubElement(_tmp_1, "div").attrib['id'] = 'tmp123xyz'
+        tmp_1 = etree.SubElement(result, "div")
+        tmp_1.attrib['class'] = 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'
+
+        # add fieldset for accessibility
+        fieldset = tag('fieldset', {'style': 'border:none;'})
+        legend = tag('legend', txt=lbl)
+        fieldset.append(legend)
+        tmp_1.append(fieldset)
+
+        etree.SubElement(fieldset, "div").attrib['id'] = 'tmp123xyz'
 
         # input
-        _el = tag('input', {'type': 'radio'})
+        el = tag('input', {'type': 'radio'})
         for a in attrs.keys():
-            _el.attrib[a] = attrs[a]
-        _el.attrib['id'] = items[i]
-        _el.attrib['onclick'] = 'setRadioValue(\'' + i + '\', \'' + hidden + '\')'
+            el.attrib[a] = attrs[a]
+        el.attrib['id'] = items[i]
+        el.attrib['onclick'] = 'setRadioValue(\'' + i + '\', \'' + hidden + '\')'
 
-        _xsl_child = tag('xsl:if', {'test': xmlNode + '=\'' + i + '\''})
-        _xsl_child_1 = tag('xsl:attribute', {'name': 'checked'})
-        _xsl_child_1.text = 'true'
-        _xsl_child.append(_xsl_child_1)
+        xsl_child = tag('xsl:if', {'test': xmlNode + '=\'' + i + '\''})
+        xsl_child_1 = tag('xsl:attribute', {'name': 'checked'})
+        xsl_child_1.text = 'true'
+        xsl_child.append(xsl_child_1)
 
-        _el.append(_xsl_child)
-        _tmp = _result.xpath("//*[@id='tmp123xyz']")[0]
-        _tmp.append(_el)
+        el.append(xsl_child)
+        tmp = result.xpath("//*[@id='tmp123xyz']")[0]
+        tmp.append(el)
 
         # items
-        _el_1 = tag('label', {'for': _el.attrib['id']})
-        _el_1.text = i
-        _tmp.append(_el_1)
+        el_1 = tag('label', {'for': el.attrib['id']})
+        el_1.text = i
+        tmp.append(el_1)
 
-        # hidden element
-        if _count == len(items.keys()):
-            _hidden = tag('input', {'type': 'hidden', 'name': hidden, 'id': hidden})
-            _xsl_child = tag('xsl:attribute', {'name': 'value'})
-            _xsl_child_1 = tag('xsl:value-of', {'select': xmlNode})
-            _xsl_child.append(_xsl_child_1)
-            _hidden.append(_xsl_child)
-            _tmp.append(_hidden)
+    # hidden element
+    hidden = tag('input', {'type': 'hidden', 'name': hidden, 'id': hidden})
+    xsl_child = tag('xsl:attribute', {'name': 'value'})
+    xsl_child_1 = tag('xsl:value-of', {'select': xmlNode})
+    xsl_child.append(xsl_child_1)
+    hidden.append(xsl_child)
+    tmp.append(hidden)
 
-        _tmp.attrib['id'] = ''
+    del tmp.attrib['id']
 
-    return _result
-
-def list(items, attrs={}, ordered=False):
-    """ List of items """
-    if ordered == True:
-        _el = tag('ol')
-    else:
-        _el = tag('ul')
-
-    for i in items:
-        _child = tag('li')
-        _child.text = i
-        _el.append(_child)
-
-    for a in attrs.keys():
-        _el.attrib[a] = attrs[a]
-
-    return _el
+    return result

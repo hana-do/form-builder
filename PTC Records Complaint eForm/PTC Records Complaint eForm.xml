@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="PTC Records Complaint eForm.xsl" ?>
+<page>
+  <formTitle>PTC Records Complaint eForm</formTitle>
+  <rdtoken/>
+  <signature>
+    <signatureConfirm/>
+    <signatureString/>
+    <signatureTimestamp/>
+  </signature>
+  <login>
+    <starId infd_name="A StarID is required" infd_required="true"/>
+    <loginTimestamp/>
+  </login>
+  <StateInfo>
+    <Client>
+      <Type>ImageNow</Type>
+    </Client>
+    <CurrentQueueName/>
+    <UserName>zm7430nd</UserName>
+  </StateInfo>
+</page>

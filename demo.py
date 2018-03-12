@@ -1,47 +1,41 @@
 from lib.FormBuilder import eForm
 from lib.helper import *
-from lxml import etree
 
 # initialize
-t = eForm(formName='PTC Records Compaint eForm', withLogin=True, forMSU=False, css='ptcComplaint.css',js='ptcComplaint.js')
+t = eForm(formName="PTC Records Complaint eForm", withLogin=True, forMSU=False, css="ptcComplaint.css", js="ptcComplaint.js")
 
-# logo & header
-t.insert(container('ptc-header'), el='innerTable', pos=-1)
-t.insert(img(src='Logo.jpg', alt='Pine Technical & Community College'), el='ptc-header-content')
-t.insert(tag('h1', txt='Student Complaint Form'), el='ptc-header-content')
+# logo & header (withLogin: loginSection, no login: formSection)
+t.insert(logo_header(logo_src="Logo.jpg", logo_txt="Pine Technical & Community College", header_txt="Student Complaint Form"), pos=-1, el="loginSection")
 
-t.insert(p('Please read the policy and procedure regarding student complaints prior to submitting this form. Information can be found at http://www.pine.edu/about/public-information-and-policies/campus-policies/student-affairs/303.pdf'), el='innerTable')
-t.insert(p('Reminder: Please submit any supporting documentation.'), el='innerTable')
-t.insert(p('By completing this form, I acknowledge that I have read, understand, and will abide by the procedure and instructions of procedure 303 Student Complaints and Reporting.'), el='innerTable')
+# general info
+t.insert(p(txt='Please read the policy and procedure regarding student complaints prior to submitting this form. Information can be found at http://www.pine.edu/about/public-information-and-policies/campus-policies/student-affairs/303.pdf'), pos=0, el='general-info')
+t.insert(p(txt='Reminder: Please submit any supporting documentation.'), pos=0, el='general-info')
+t.insert(p(txt='By completing this form, I acknowledge that I have read, understand, and will abide by the procedure and instructions of procedure 303 Student Complaints and Reporting.'), pos=0, el='general-info')
 
-# form
-## fields
-t.insert(container(id='student-info'), el='formSection')
-t.insert(headingBar('Student Information'), el='student-info-content', pos=-1)
-t.insert(input(type='text', lbl='First Name:', id='firstName', xmlNode='//page/firstName'), el='student-info-content')
-t.insert(input(type='text', lbl='Middle Name:', id='middleName', xmlNode='//page/middleName'), el='student-info-content')
-t.insert(input(type='text', lbl='Last Name:', id='lastName', xmlNode='//page/lastName'), el='student-info-content')
-t.insert(input(type='text', lbl='Tech ID:', id='techId', xmlNode='//page/techId'), el='student-info-content')
-t.insert(input(type='text', lbl='Star ID:', id='displayStarId', xmlNode='//page/login/starId'), el='student-info-content')
-t.insert(input(type='email', lbl='Email Address: ', id='email', xmlNode='//page/email'), el='student-info-content')
-t.insert(input(type='text', lbl='Street Address: ', id='streetAdd', xmlNode='//page/streetAdd'), el='student-info-content')
-t.insert(input(type='text', lbl='City: ', id='city', xmlNode='//page/city'), el='student-info-content')
-t.insert(input(type='text', lbl='Zip: ', id='zip', xmlNode='//page/zip'), el='student-info-content')
-t.insert(input(type='text', lbl='Complaint filed against (instructor name): ', id='instructorName', xmlNode='//page/instructorName'), el='student-info-content')
+# student info (required for login: name, techid, email)
+t.insert(container(id='student-info', txt='Student Information'), pos=-1, el='sig-info')
+t.insert(input(type='text', id='lastName', xmlNode='//page/lastName', lbl='Last Name:', required=True, readonly=True, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='firstName', xmlNode='//page/firstName', lbl='First Name:', required=True, readonly=True, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='middleName', xmlNode='//page/middleName', lbl='Middle Name:', required=True, readonly=True, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='displayStarId', xmlNode='//page/login/starId', lbl='Star ID:', required=True, readonly=True, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='techId', xmlNode='//page/techId', lbl='Tech ID:', required=True, readonly=True, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='email', id='email', xmlNode='//page/email', lbl='Email Address:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='phone', xmlNode='//page/phone', lbl='Phone Number:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='streetAdd', xmlNode='//page/streetAdd', lbl='Street Address:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='city', xmlNode='//page/city', lbl='City:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='state', xmlNode='//page/state', lbl='State:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='zip', xmlNode='//page/zip', lbl='Zip:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(type='text', id='complaintAgainst', xmlNode='//page/complaintAgainst', lbl='Complaint filed against (Instructor Name):', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
 
 ## hidden
-t.insert(tag('div', attrs={'style': 'display:none;'}), el='student-info-content', id='hiddenSec')
-t.insert(input(type='hidden', id='fullName', xmlNode='//page/fullName', readonly=True), el='hiddenSec')
+t.insert(tag('div', attrs={'style': 'display:none;', 'id': 'hidden-info'}), pos=0, el='student-info-content')
+t.insert(input(type='hidden', id='fullName', xmlNode='//page/fullName', lbl='Full Name:', required=False, readonly=True, s=12, m=6, l=4), pos=0, el='hidden-info')
 
-## fields
-t.insert(container(id='complaint-info'), el='formSection')
-t.insert(headingBar('Student Information'), el='complaint-info-content', pos=-1)
-
-
-t.insert(p('A new form must be submitted for each person/department you are releasing your information to.'), el='student-info-content')
-t.insert(p('I hereby authorize Minnesota State Community and Technical College to release and/or orally discuss the education records described below about me to: (list names of both parents, guardians, others).'), el='student-info-content')
-t.insert(input(type='text', lbl='Name:', id='name', xmlNode='//page/name'), el='student-info-content')
-t.insert(input(type='text', lbl='Relationship:', id='relationship', xmlNode='//page/relationship'), el='student-info-content')
+# complaint info
+t.insert(container(id='complaint-info', txt='Complaint Detail'), pos=-1, el='sig-info')
+t.insert(textarea(id='natureOfComplaint', xmlNode='//page/natureOfComplaint', lbl='Describe the nature of the complaint/grievance. Be Factual - include names, dates, locations, etc.', required=True, readonly=False), pos=0, el='complaint-info-content')
+t.insert(textarea(id='actionTaken', xmlNode='//page/actionTaken', lbl='Describe the actions you have taken to resolve the issue.', required=True, readonly=False), pos=0, el='complaint-info-content')
+t.insert(textarea(id='resolutionRequested', xmlNode='//page/resolutionRequested', lbl='Describe the resolution/action requested.', required=True, readonly=False), pos=0, el='complaint-info-content')
 
 # output
-# t.save('PTC Records Compaint eForm/PTC Records Compaint eForm.xsl')
+t.save('PTC Records Complaint eForm/PTC Records Complaint eForm.xsl')

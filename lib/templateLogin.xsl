@@ -7,7 +7,7 @@
       <!-- variables from StateInfo for local test -->
       <xsl:variable name="viewer" select="StateInfo/Client/Type">
       </xsl:variable>
-      <xsl:variable name="queue" select="StateInfo/Client/CurrentQueueName">
+      <xsl:variable name="queue" select="StateInfo/CurrentQueueName">
       </xsl:variable>
       <head>
         <xsl:if test="$viewer != 'WebNow'">
@@ -193,71 +193,141 @@
                       </div>
                     </div>
 
+                    <div id="sig-info">
+                      <div class="headingBar" id="custom-8">Electronic Signature</div>
+                      <div class="columns" id="sig-info-content">
+                        <div class="columns">
+                          <p id="p-6">By entering your password and clicking the box below, you consent to use electronic communications, electronic records, and electronic signatures rather than paper documents for this form.
+                          </p>
+                          <div id="sigPasswordDiv" class="show">
+                            <xsl:variable name="signatureCheck1" select="//page/signature/signatureConfirm"/>
+                            <xsl:if test="$signatureCheck1 != ''">
+                              <xsl:attribute name="class">hide</xsl:attribute>
+                            </xsl:if>
+
+                            <div>
+                              <div class="row">
+                                <div class="small-12 medium-12 large-12 columns">
+                                  <label for="sigPassword">Provide your StarID password:</label>
+                                  <input type="password" name="sigPassword" required="true" id="sigPassword" dbCall_param="6" dbCall="eForm_StarId_Authenticate_Mnscu_CLI" class="focusField"/>
+                                  <span class="form-error">
+                                    Password required.
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div>
+                                <xsl:variable name="signatureConfirm">
+                                  <xsl:value-of select="normalize-space(//page/signature/signatureConfirm)"/>
+                                </xsl:variable>
+
+                                <input type="checkbox" id="signatureConfirm" class="checkbox">
+                                  <xsl:attribute name="onClick">
+                                    authenticate(this, '<xsl:value-of select="StateInfo/Client/Type"/>');
+                                  </xsl:attribute>
+
+                                  <xsl:attribute name="is_checked">
+                                    <xsl:value-of select="//page/signature/signatureConfirm"/>
+                                  </xsl:attribute>
+
+                                  <xsl:if test="$signatureConfirm='true'">
+                                    <xsl:attribute name="CHECKED">true</xsl:attribute>
+                                  </xsl:if>
+
+                                  <xsl:if test="$viewer != 'FormViewer'">
+                                    <xsl:attribute name="DISABLED">DISABLED</xsl:attribute>
+                                  </xsl:if>
+                                </input>
+
+                                <label for="signatureConfirm">By checking this box, <b>I agree</b> to all electronic signature terms and conditions.
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="signatureStringDiv" name="signatureStringDiv" class="hide"
+                             style="font-weight: bold;">
+                          <xsl:variable name="signatureCheck2" select="//page/signature/signatureConfirm"/>
+                          <xsl:if test="$signatureCheck2 != ''">
+                            <xsl:attribute name="class">show</xsl:attribute>
+                          </xsl:if>
+                          <xsl:copy-of select="//page/signature/signatureString"/>
+                        </div>
+
+                        <div id="signatureMessageDiv" name="signatureMessageDiv" style="color: #FF1414;"></div>
+                        <input type="hidden" name="signatureTimestamp" id="signatureTimestamp">
+                          <xsl:attribute name="value">
+                            <xsl:value-of select="//page/signature/signatureTimestamp"/>
+                          </xsl:attribute>
+                        </input>
+                        <input type="hidden" name="signatureString" id="signatureString">
+                          <xsl:attribute name="value">
+                            <xsl:value-of select="//page/signature/signatureString"/>
+                          </xsl:attribute>
+                        </input>
+                      </div>
+                    </div>
+
                     <div id="office" style="display:none;">
                       <xsl:if test="$viewer != 'FormViewer'">
                         <xsl:attribute name="style">display:block;</xsl:attribute>
                       </xsl:if>
-                      <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
-                        <font color="#ffffff">Office Section</font>
-                        <span class="headingBarSpan"></span>
-                      </div>
-                      <div class="checks">
-                        <xsl:if test="contains($queue, 'ARCC')">
-                          <xsl:attribute name="class">checks active</xsl:attribute>
+                      <div class="fieldTable" width="100%" cellpadding="0" cellspacing="0" style="padding-top: 0px;">
+                        <xsl:if test="contains($queue, 'ARCC Club Roster Incoming')">
+                          <xsl:attribute name="class">fieldTable active</xsl:attribute>
                         </xsl:if>
-                        <div class="row small-12 columns">
-                          <div class="small-6 columns">
-                            <label for="hrSignature">Signature:</label>
-                            <br/>
-                            <input type="text" name="approvedBy" id="approvedBy" readonly="readonly">
-                              <xsl:attribute name="value">
-                                <xsl:value-of select="//page/approvedBy"/>
-                              </xsl:attribute>
-                            </input>
-                          </div>
-                          <div class="small-6 columns">
-                            <label for="hrSignatureDate">Date:</label>
-                            <br/>
-                            <input type="text" name="approvedByDate" id="approvedByDate" readonly="readonly">
-                              <xsl:attribute name="value">
-                                <xsl:value-of select="//page/approvedByDate"/>
-                              </xsl:attribute>
-                            </input>
-                          </div>
+                        <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
+                          <font color="#ffffff">Office Section</font>
+                          <span class="headingBarSpan"></span>
                         </div>
                         <div class="row small-12 columns">
                           <div class="small-12 columns">
-                            <xsl:if test="contains($queue, 'ARCC')">
-                              <input type="button" class="button" value="Click Here to Sign this Document" id="btnClickApprove" onClick="getUsersName(this, 'approvedBy');">
-                                <xsl:variable name="approvedBy" select="//page/approvedBy"/>
-                                <xsl:if test="$approvedBy != ''">
-                                  <xsl:attribute name="style">
-                                    display:none;
-                                  </xsl:attribute>
-                                </xsl:if>
-                              </input>
-                              <input type="button" id="btnGetUserInfo" style="display:none;" dbCall_onClick="eForm_User_Name_Lookup"/>
-                              <input type="hidden" id="hdnReturnValue" name="hdnReturnValue" dbSet="eForm_User_Name_Lookup" dbSet_param="1"/>
-                              <input type="hidden" id="userId" name="userId" dbCall_param="1" dbCall="eForm_User_Name_Lookup">
-                                <xsl:attribute name="value">
-                                  <xsl:value-of select="StateInfo/UserName"/>
-                                </xsl:attribute>
-                              </input>
-                            </xsl:if>
-                          </div>
-                        </div>
-                        <div class="row small-12 columns">
-                          <div class="small-12 columns">
-                            <label for="approvedByNotes">Internal Comments/Notes:</label>
+                            <label for="adminNotes">Internal Comments:</label>
                             <br/>
-                            <textarea name="approvedByNotes" id="approvedByNotes" rows="3" cols="90">
-                              <xsl:value-of select="//page/approvedByNotes"/>
+                            <textarea name="adminNotes" id="adminNotes" rows="3" cols="90">
+                              <xsl:value-of select="//page/office/adminNotes"/>
                             </textarea>
                           </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div style='border-top: 1px solid #cccccc;'></div>
+                        <div class="row small-12 columns">
+                          <div class="small-12 medium-8 columns">
+                            <label for="admin">Name:</label>
+                            <br/>
+                            <input type="text" name="adminSig" id="adminSig" readonly="readonly">
+                              <xsl:attribute name="value">
+                                <xsl:value-of select="//page/office/adminSig"/>
+                              </xsl:attribute>
+                            </input>
+                          </div>
+                          <div class="small-12 medium-4 columns">
+                            <label for="adminSigDate">Date:</label>
+                            <br/>
+                            <input type="text" name="adminSigDate" id="adminSigDate" readonly="readonly">
+                              <xsl:attribute name="value">
+                                <xsl:value-of select="//page/office/adminSigDate"/>
+                              </xsl:attribute>
+                            </input>
+                          </div>
+                        </div>
+                        <div class="row small-12 columns">
+                          <div class="small-12 columns">
+                            <input type="button" class="button" value="Click Here to Sign this Document" id="btnClickApprove" onClick="getUsersName(this);">
+                              <xsl:if test="//page/office/adminSig != ''">
+                                <xsl:attribute name="style">
+                                  display:none;
+                                </xsl:attribute>
+                              </xsl:if>
+                            </input>
+                            <input type="button" id="btnGetUserInfo" style="display:none;" dbCall_onClick="eForm_User_Name_Lookup"/>
+                            <input type="hidden" id="hdnReturnValue" name="hdnReturnValue" dbSet="eForm_User_Name_Lookup" dbSet_param="1"/>
+                            <input type="hidden" id="userId" name="userId" dbCall_param="1" dbCall="eForm_User_Name_Lookup">
+                              <xsl:attribute name="value">
+                                <xsl:value-of select="StateInfo/UserName"/>
+                              </xsl:attribute>
+                            </input>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
