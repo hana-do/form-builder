@@ -13,42 +13,42 @@ class eForm:
   def __init__(self, formName, withLogin=True, forMSU=False, css="form.css", js="form.js"):
     """ DATA DEFINITION """
     # a separate folder for each eForm
-    formPath = formName + '/' + formName
+    self.formPath = formName + '/' + formName
 
     # initialize the data definition file
-    _fxml = open(formPath + '.xml', 'w')
+    _fxml = open(self.formPath + '.xml', 'w')
 
     # add processing instructions
     _fxml.write('<?xml version="1.0" encoding="UTF-8"?>\n')
     _fxml.write('<?xml-stylesheet type="text/xsl" href="' + formName + '.xsl" ?>\n')
 
     # add root node
-    _xml = etree.Element('page')
+    self.xml = etree.Element('page')
 
     # add children nodes
     _node = etree.Element('formTitle')
     _node.text = formName
-    _xml.append(_node)
+    self.xml.append(_node)
 
     if withLogin == True:
       _node = etree.Element('rdtoken')
-      _xml.append(_node)
+      self.xml.append(_node)
 
       # signature
       _node = etree.Element('signature')
-      _child = etree.Element('signatureConfirm')
+      _child = etree.Element('signatureConfirm', {'infd_required': 'true', 'infd_name': 'You must agree to all terms and conditions'})
       _node.append(_child)
       _child = etree.Element('signatureString')
       _node.append(_child)
       _child = etree.Element('signatureTimestamp')
       _node.append(_child)
-      _xml.append(_node)
+      self.xml.append(_node)
 
       # login
       _node = etree.Element('login')
       etree.SubElement(_node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
       etree.SubElement(_node, 'loginTimestamp')
-      _xml.append(_node)
+      self.xml.append(_node)
 
       if forMSU == True:
         _f = 'lib/templateLoginMSU.xsl'
@@ -59,9 +59,9 @@ class eForm:
 
       # signature
       _node = etree.Element('signature')
-      _xml.append(_node)
-      _node = etree.Element('signatureDate')
-      _xml.append(_node)
+      self.xml.append(_node)
+      _node = etree.Element('signatureDate', {'infd_name': 'You must affirm that the information provided is correct.', 'infd_required': 'true'})
+      self.xml.append(_node)
 
     # add stateinfo nodes for local testing
     _node = etree.Element('StateInfo')
@@ -79,11 +79,7 @@ class eForm:
     _node.append(_client)
     _node.append(_queue)
     _node.append(_username)
-    _xml.append(_node)
-
-    # write to data definition file
-    _fxml.write(etree.tostring(_xml, pretty_print=True, encoding="unicode"))
-    _fxml.close()
+    self.xml.append(_node)
 
     """ STYLESHEET """
     # initialize stylesheet for data definition file
@@ -122,9 +118,14 @@ class eForm:
 
   """
   Save eForm
-  :param filename: file name
   """
-  def save(self, filename):
-    f = open(filename, 'w')
+  def save(self):
+    # write to data definition file
+    f = open(self.formPath + '.xml', 'a')
+    f.write(etree.tostring(self.xml, pretty_print=True, encoding="unicode"))
+    f.close()
+
+    # write to stylesheet
+    f = open(self.formPath + '.xsl', 'w')
     f.write(etree.tostring(self.doc, pretty_print=True, encoding="unicode"))
     f.close()

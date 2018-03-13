@@ -1,5 +1,4 @@
 from lxml import etree
-import copy
 
 """
 Create an element in HTML
@@ -100,6 +99,7 @@ def br():
 
 """
 Create an input element
+:param xml: data definition file of the form
 :param type: type of input
 :param id: id of input
 :param xmlNode: value node
@@ -111,7 +111,7 @@ Create an input element
 :param l: size for large screen
 :return: an etree element
 """
-def input(type, id, xmlNode, lbl, required, readonly, s, m, l):
+def input(xml, type, id, xmlNode, lbl, required, readonly, s, m, l):
     el = tag('div', {'class': 'small-' + str(s) + ' medium-' + str(m) + ' large-' + str(l) + ' columns'})
 
     # label
@@ -136,10 +136,13 @@ def input(type, id, xmlNode, lbl, required, readonly, s, m, l):
     child.append(xsl)
     el.append(child)
 
+    update_xml(xml, xmlNode, required)
+
     return el
 
 """
 Create a textarea element
+:param xml: data definition file of the form
 :param id: id of textarea
 :param xmlNode: value node
 :param lbl: label of textarea
@@ -148,7 +151,7 @@ Create a textarea element
 :param row: size of textarea
 :return: an etree element
 """
-def textarea(id, xmlNode, lbl, required, readonly):
+def textarea(xml, id, xmlNode, lbl, required, readonly):
     el = tag('div', {'class': 'small-12 columns'})
 
     # label
@@ -171,20 +174,23 @@ def textarea(id, xmlNode, lbl, required, readonly):
     child.append(xsl)
     el.append(child)
 
+    update_xml(xml, xmlNode, required)
+
     return el
 
 """
 Create group of radiobuttons with label
+:param xml: data definition part of the form
 :param items: dictionary of labels as keys and ids as values
-:param attrs: 
-:param xmlNode: 
-:param hidden: 
-:param s: 
-:param m: 
-:param l: 
+:param attrs: attributes
+:param xmlNode: value node
+:param hidden: id of hidden field
+:param s: size for small screen
+:param m: size for medium screen
+:param l: size for large screen
 :return: an etree element
 """
-def radio(items, attrs, xmlNode, hidden, lbl, s=12, m=6, l=4):
+def radio(xml, items, attrs, xmlNode, hidden, lbl, required, s=12, m=6, l=4):
     result = tag('div', {'class': 'row columns'})
 
     for i in items.keys():
@@ -230,4 +236,48 @@ def radio(items, attrs, xmlNode, hidden, lbl, s=12, m=6, l=4):
 
     del tmp.attrib['id']
 
+    update_xml(xml, xmlNode, required)
+
     return result
+
+
+"""
+Update the data definition file
+:param xml: data definition part of the form  
+:param xmlNode: value node
+:param required: required node or not
+"""
+def update_xml(xml, xmlNode, required):
+  # assume page is the root node
+  nodes = xmlNode[7:].split('/')
+  xml_nodes = []
+  for i in xml.iterdescendants():
+    xml_nodes.append(i.tag)
+
+  for i in range(len(nodes)):
+    # if xmlNode == '//page/login/starId':
+    #   print('a')
+    if nodes[i] not in xml_nodes:
+      new_nodes = create_nodes(nodes[i:])
+      xml.append(new_nodes)
+      break
+
+  if required == True:
+    el = xml.xpath(xmlNode)[0]
+    el.attrib['infd_name'] = 'A ' + nodes[-1] + ' is required'
+    el.attrib['infd_required'] = 'true'
+
+"""
+Create nested children nodes if not existed 
+:param nodes: list of nodes to be nested
+:return: an etree element
+"""
+def create_nodes(nodes):
+  if len(nodes) == 0:
+    return
+  else:
+    node = etree.Element(nodes[0])
+    child = create_nodes(nodes[1:])
+    if not child is None:
+      node.append(child)
+    return node
