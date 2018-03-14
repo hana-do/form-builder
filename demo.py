@@ -25,7 +25,7 @@ t.insert(input(xml=t.xml, type='text', id='streetAdd', xmlNode='//page/streetAdd
 t.insert(input(xml=t.xml, type='text', id='city', xmlNode='//page/city', lbl='City:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
 t.insert(input(xml=t.xml, type='text', id='state', xmlNode='//page/state', lbl='State:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
 t.insert(input(xml=t.xml, type='text', id='zip', xmlNode='//page/zip', lbl='Zip:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
-t.insert(input(xml=t.xml, type='text', id='complaintAgainst', xmlNode='//page/complaintAgainst', lbl='Complaint filed against (Instructor Name):', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
+t.insert(input(xml=t.xml, type='text', id='complaintAgainst', xmlNode='//page/complaintAgainst', lbl='Complaint filed against:', required=True, readonly=False, s=12, m=6, l=4), pos=0, el='student-info-content')
 
 ## hidden
 t.insert(tag('div', attrs={'style': 'display:none;', 'id': 'hidden-info'}), pos=0, el='student-info-content')
@@ -34,8 +34,12 @@ t.insert(input(xml=t.xml, type='hidden', id='fullName', xmlNode='//page/fullName
 # complaint info
 t.insert(container(id='complaint-info', txt='Complaint Detail'), pos=-1, el='sig-info')
 t.insert(textarea(xml=t.xml, id='natureOfComplaint', xmlNode='//page/natureOfComplaint', lbl='Describe the nature of the complaint/grievance. Be Factual - include names, dates, locations, etc.', required=True, readonly=False), pos=0, el='complaint-info-content')
+t.insert(textarea(xml=t.xml, id='communicationTime', xmlNode='//page/communicationTime', lbl='When did you communicate with the person(s) involved?', required=True, readonly=False), pos=0, el='complaint-info-content')
 t.insert(textarea(xml=t.xml, id='actionTaken', xmlNode='//page/actionTaken', lbl='Describe the actions you have taken to resolve the issue.', required=True, readonly=False), pos=0, el='complaint-info-content')
 t.insert(textarea(xml=t.xml, id='resolutionRequested', xmlNode='//page/resolutionRequested', lbl='Describe the resolution/action requested.', required=True, readonly=False), pos=0, el='complaint-info-content')
+
+# sig
+t.insert(p(txt='Your complaint will be addressed with appropriate administrators, staff members, or faculty members within ten (10) business days. For more information regarding the resolution of your complaint, contact the Director of Student Success.'), pos=-1, el='signatureStringDiv')
 
 # output
 t.save()

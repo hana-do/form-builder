@@ -34,20 +34,21 @@ class eForm:
       _node = etree.Element('rdtoken')
       self.xml.append(_node)
 
+      # login
+      _node = etree.Element('login')
+      etree.SubElement(_node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
+      etree.SubElement(_node, 'loginTimestamp')
+      self.xml.append(_node)
+
       # signature
       _node = etree.Element('signature')
-      _child = etree.Element('signatureConfirm', {'infd_required': 'true', 'infd_name': 'You must agree to all terms and conditions'})
+      _child = etree.Element('signatureConfirm',
+                             {'infd_required': 'true', 'infd_name': 'You must agree to all terms and conditions'})
       _node.append(_child)
       _child = etree.Element('signatureString')
       _node.append(_child)
       _child = etree.Element('signatureTimestamp')
       _node.append(_child)
-      self.xml.append(_node)
-
-      # login
-      _node = etree.Element('login')
-      etree.SubElement(_node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
-      etree.SubElement(_node, 'loginTimestamp')
       self.xml.append(_node)
 
       if forMSU == True:
@@ -62,6 +63,13 @@ class eForm:
       self.xml.append(_node)
       _node = etree.Element('signatureDate', {'infd_name': 'You must affirm that the information provided is correct.', 'infd_required': 'true'})
       self.xml.append(_node)
+
+    # office
+    _node = etree.Element('office')
+    etree.SubElement(_node, 'adminNotes')
+    etree.SubElement(_node, 'adminSig')
+    etree.SubElement(_node, 'adminSigDate')
+    self.xml.append(_node)
 
     # add stateinfo nodes for local testing
     _node = etree.Element('StateInfo')

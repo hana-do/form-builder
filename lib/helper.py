@@ -1,4 +1,5 @@
 from lxml import etree
+import re
 
 """
 Create an element in HTML
@@ -255,8 +256,6 @@ def update_xml(xml, xmlNode, required):
     xml_nodes.append(i.tag)
 
   for i in range(len(nodes)):
-    # if xmlNode == '//page/login/starId':
-    #   print('a')
     if nodes[i] not in xml_nodes:
       new_nodes = create_nodes(nodes[i:])
       xml.append(new_nodes)
@@ -264,7 +263,12 @@ def update_xml(xml, xmlNode, required):
 
   if required == True:
     el = xml.xpath(xmlNode)[0]
-    el.attrib['infd_name'] = 'A ' + nodes[-1] + ' is required'
+    # create warning message
+    node_name = nodes[-1][0].upper() + nodes[-1][1:]
+    words = re.findall('[A-Z][^A-Z]*', node_name)
+    lowercase_words = [word.lower() for word in words]
+    phrase = ' '.join(lowercase_words)
+    el.attrib['infd_name'] = 'A ' + phrase + ' is required'
     el.attrib['infd_required'] = 'true'
 
 """
