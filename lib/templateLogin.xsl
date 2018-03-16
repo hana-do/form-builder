@@ -11,7 +11,7 @@
       </xsl:variable>
       <head>
         <xsl:if test="$viewer != 'WebNow'">
-          <meta content="ie-edge;" http-equiv="x-ua-compatible"/>
+          <meta content="ie=edge;" http-equiv="x-ua-compatible"/>
           <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
           <style>
             <!-- iPhone Jumping Issue -->
@@ -33,28 +33,20 @@
           </style>
         </xsl:if>
       </head>
-      <!-- javascript -->
-      <script language="JavaScript" src="form.js" type="text/javascript">
-      </script>
-      <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript">
-      </script>
-      <script language="JavaScript" src="frameworkSetup.js" type="text/javascript">
-      </script>
-      <script language="JavaScript" src="sharedResources.js" type="text/javascript">
-      </script>
+
       <xsl:if test="$viewer != 'WebNow'">
-        <script language="JavaScript" src="framework.js" type="text/javascript">
-        </script>
-        <link href="framework.css" rel="stylesheet"/>
-        <link href="form.css" rel="stylesheet" type="text/css"/>
+        <script language="JavaScript" src="jquery-2.1.0.min.js" type="text/javascript"></script>
+        <script language="JavaScript" src="framework.js" type="text/javascript"></script>
       </xsl:if>
-      <!-- login script -->
+      <link href="framework.css" rel="stylesheet"/>
       <xsl:if test="$viewer = 'FormViewer'">
-        <script language="JavaScript" src="Authenticate.js" type="text/javascript">
-        </script>
+        <script language="JavaScript" src="Authenticate.js" type="text/javascript"></script>
         <link href="Authenticate.css" rel="stylesheet" type="text/css"/>
       </xsl:if>
-      <!-- form load -->
+      <script language="JavaScript" src="form.js" type="text/javascript"></script>
+      <script language="JavaScript" src="frameworkSetup.js" type="text/javascript"></script>
+      <script language="JavaScript" src="sharedResources.js" type="text/javascript"></script>
+      <link href="form.css" rel="stylesheet" type="text/css"/>
       <script>
         function formLoad() {
           var clientType = '<xsl:value-of select="StateInfo/Client/Type"/>';
@@ -312,7 +304,7 @@
                         </div>
                         <div class="row small-12 columns">
                           <div class="small-12 columns">
-                            <input type="button" class="button" value="Click Here to Sign this Document" id="btnClickApprove" onClick="getUsersName(this);">
+                            <input type="button" class="button" value="Click Here to Electronically Sign this Document" id="btnClickApprove" onClick="getUsersName(this);">
                               <xsl:if test="//page/office/adminSig != ''">
                                 <xsl:attribute name="style">
                                   display:none;
