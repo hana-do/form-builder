@@ -1,5 +1,6 @@
 from lxml import etree
 from lib.helper import *
+import re
 
 class eForm:
   """
@@ -19,7 +20,6 @@ class eForm:
     _fxml = open(self.formPath + '.xml', 'w')
 
     # add processing instructions
-    _fxml.write('<?xml version="1.0" encoding="UTF-8"?>\n')
     _fxml.write('<?xml-stylesheet type="text/xsl" href="' + formName + '.xsl" ?>\n')
 
     # add root node
@@ -39,6 +39,7 @@ class eForm:
       _node = etree.Element('login')
       etree.SubElement(_node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
       etree.SubElement(_node, 'loginTimestamp').text = ""
+      etree.SubElement(_node, 'userAgent').text = ""
       self.xml.append(_node)
 
       # signature
@@ -139,5 +140,7 @@ class eForm:
 
     # write to stylesheet
     f = open(self.formPath + '.xsl', 'w')
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # add xml instruction
     f.write(etree.tostring(self.doc, pretty_print=True, encoding="unicode"))
     f.close()
+

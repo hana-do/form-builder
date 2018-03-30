@@ -155,7 +155,7 @@
                         <xsl:attribute name="style">display:block;</xsl:attribute>
                       </xsl:if>
                       <div class="fieldTable" width="100%" cellpadding="0" cellspacing="0" style="padding-top: 0px;">
-                        <xsl:if test="contains($queue, 'ARCC Club Roster Incoming')">
+                        <xsl:if test="contains($queue, '')">
                           <xsl:attribute name="class">fieldTable active</xsl:attribute>
                         </xsl:if>
                         <div class="headingBar" style="margin-bottom: 10px; margin-top:10px;">
@@ -193,20 +193,16 @@
                         </div>
                         <div class="row small-12 columns">
                           <div class="small-12 columns">
-                            <input type="button" class="button" value="Click Here to Electronically Sign this Document" id="btnClickApprove" onClick="getUsersName(this);">
-                              <xsl:if test="//page/office/adminSig != ''">
-                                <xsl:attribute name="style">
-                                  display:none;
+                            <xsl:if test="contains($queue, '')">
+                              <input type="button" class="button" value="Click Here to Electronically Sign this Document" id="btnClickApprove" onClick="getUsersName(this);"/>
+                              <input type="button" id="btnGetUserInfo" style="display:none;" dbCall_onClick="eForm_User_Name_Lookup"/>
+                              <input type="hidden" id="hdnReturnValue" name="hdnReturnValue" dbSet="eForm_User_Name_Lookup" dbSet_param="1"/>
+                              <input type="hidden" id="userId" name="userId" dbCall_param="1" dbCall="eForm_User_Name_Lookup">
+                                <xsl:attribute name="value">
+                                  <xsl:value-of select="StateInfo/UserName"/>
                                 </xsl:attribute>
-                              </xsl:if>
-                            </input>
-                            <input type="button" id="btnGetUserInfo" style="display:none;" dbCall_onClick="eForm_User_Name_Lookup"/>
-                            <input type="hidden" id="hdnReturnValue" name="hdnReturnValue" dbSet="eForm_User_Name_Lookup" dbSet_param="1"/>
-                            <input type="hidden" id="userId" name="userId" dbCall_param="1" dbCall="eForm_User_Name_Lookup">
-                              <xsl:attribute name="value">
-                                <xsl:value-of select="StateInfo/UserName"/>
-                              </xsl:attribute>
-                            </input>
+                              </input>
+                            </xsl:if>
                           </div>
                         </div>
                       </div>
