@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
-  </xsl:output>
+  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html"/>
   <xsl:template match="/page">
     <html>
       <!-- variables from StateInfo for local test -->
@@ -77,8 +76,8 @@
 
           if (clientType != "FormViewer") {
             var allowedElements = {
-            '' : [''],
-            'any' : ['bypassFormLocking']
+            '' : ['adminNotes', 'btnClickApprove', 'btnGetUserInfo'],
+            'any' : ['adminNotes', 'btnClickApprove', 'btnGetUserInfo']
             };
             disableElements(allowedElements, clientType, currentQueue);
           } else {

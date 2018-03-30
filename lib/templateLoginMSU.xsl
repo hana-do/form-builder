@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html">
-  </xsl:output>
+  <xsl:output doctype-system="about:legacy-compat" encoding="utf-8" method="html"/>
   <xsl:template match="/page">
     <html>
       <!-- variables from StateInfo for local test -->
@@ -77,8 +76,8 @@
 
           if (clientType != "FormViewer") {
             var allowedElements = {
-            '' : [''],
-            'any' : ['bypassFormLocking']
+            '' : ['adminNotes', 'btnClickApprove', 'btnGetUserInfo'],
+            'any' : ['adminNotes', 'btnClickApprove', 'btnGetUserInfo']
             };
             disableElements(allowedElements, clientType, currentQueue);
           } else {
@@ -146,11 +145,11 @@
                           <input type="hidden" id="authFunction" name="authFunction" value="AuthAndLookup" dbCall_param="5" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
                           <input type="hidden" id="curAttempts" nam="curAttempts" value="1"/>
                           <input type="hidden" id="enableSaveOnAuth" name="enableSaveOnAuth" value="AuthOnly"/>
-                          <input type="hidden" id="formName" name="formName" value="arccCertificate" dbCall_param="4" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
+                          <input type="hidden" id="formName" name="formName" value="formName_abbr" dbCall_param="4" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
                           <input type="hidden" id="hdnReturnAuthenticationValue" name="hdnReturnAuthenticationValue" dbSet="eForm_StarId_Authenticate_MSU_CLI" dbSet_param="1"/>
                           <input type="hidden" id="maxAttemptsAuthAndLookup" name="maxAttemptsAuthAndLookup" value="3"/>
                           <input type="hidden" id="maxAttemptsAuthOnly" name="maxAttemptsAuthOnly" value="10"/>
-                          <input type="hidden" id="rcId" name="rcId" value="0075" dbCall_param="3" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
+                          <input type="hidden" id="rcId" name="rcId" value="schoolCode" dbCall_param="3" dbCall="eForm_StarId_Authenticate_MSU_CLI"/>
 
                           <input type="hidden" id="rdtoken" name="rdtoken">
                             <xsl:attribute name="value">

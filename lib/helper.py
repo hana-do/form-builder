@@ -286,3 +286,14 @@ def create_nodes(nodes):
     if not child is None:
       node.append(child)
     return node
+
+"""
+Create attachment button to be added anywhere in the form
+:param xml: doc attribute of the form
+:return: an etree element
+"""
+def attachButton(xml):
+  xsl = tag('xsl:if', {'test': '$viewer = "FormViewer"'})
+  xsl_child = tag('input', {'type': 'button', 'value': "Upload Attachments", 'class': 'button', 'onclick': 'window.parent.ImageNowForms.ButtonAction.addAttachments();'})
+  xsl.append(xsl_child)
+  return xsl

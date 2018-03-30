@@ -6,12 +6,11 @@ class eForm:
   """
   Create a new instance of eForm
   :param formName: name of the form
+  :param formName_abbr: abbreviated name of the form
   :param withLogin: containing login section or not
   :param forMSU: MSU or Mnscu
-  :param css: name of css file with extension
-  :param js: name of js file with extension
   """
-  def __init__(self, formName, withLogin=True, forMSU=False, css="form.css", js="form.js"):
+  def __init__(self, formName, formName_abbr, schoolCode, withLogin=True, forMSU=False):
     """ DATA DEFINITION """
     # a separate folder for each eForm
     self.formPath = formName + '/' + formName
@@ -102,9 +101,15 @@ class eForm:
 
     # modify css and js file names
     _el = self.doc.xpath("//*[@href=$href]", href='form.css')[0]
-    _el.attrib['href'] = css
+    _el.attrib['href'] = formName_abbr + '.css'
     _el = self.doc.xpath("//*[@src=$src]", src='form.js')[0]
-    _el.attrib['src'] = js
+    _el.attrib['src'] = formName_abbr + '.js'
+
+    # modify form name in log and school code
+    _el = self.doc.xpath("//*[@value=$value]", value='formName_abbr')[0]
+    _el.attrib['value'] = formName_abbr
+    _el = self.doc.xpath("//*[@value=$value]", value='schoolCode')[0]
+    _el.attrib['value'] = schoolCode
 
     _markup.close()
 
