@@ -258,6 +258,7 @@ def update_xml(xml, xmlNode, required):
   for i in range(len(nodes)):
     if nodes[i] not in xml_nodes:
       new_nodes = create_nodes(nodes[i:])
+      new_nodes.text = ""
       xml.append(new_nodes)
       break
 

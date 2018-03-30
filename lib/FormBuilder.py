@@ -32,12 +32,13 @@ class eForm:
 
     if withLogin == True:
       _node = etree.Element('rdtoken')
+      _node.text = "" # to get the closing tag
       self.xml.append(_node)
 
       # login
       _node = etree.Element('login')
       etree.SubElement(_node, 'starId', {'infd_required': 'true', 'infd_name': 'A StarID is required'})
-      etree.SubElement(_node, 'loginTimestamp')
+      etree.SubElement(_node, 'loginTimestamp').text = ""
       self.xml.append(_node)
 
       # signature
@@ -46,8 +47,10 @@ class eForm:
                              {'infd_required': 'true', 'infd_name': 'You must agree to all terms and conditions'})
       _node.append(_child)
       _child = etree.Element('signatureString')
+      _child.text = ""
       _node.append(_child)
       _child = etree.Element('signatureTimestamp')
+      _child.text = ""
       _node.append(_child)
       self.xml.append(_node)
 
@@ -66,9 +69,9 @@ class eForm:
 
     # office
     _node = etree.Element('office')
-    etree.SubElement(_node, 'adminNotes')
-    etree.SubElement(_node, 'adminSig')
-    etree.SubElement(_node, 'adminSigDate')
+    etree.SubElement(_node, 'adminNotes').text = ""
+    etree.SubElement(_node, 'adminSig').text =""
+    etree.SubElement(_node, 'adminSigDate').text = ""
     self.xml.append(_node)
 
     # add stateinfo nodes for local testing
@@ -80,6 +83,7 @@ class eForm:
     _client.append(_type)
 
     _queue = etree.Element('CurrentQueueName')
+    _queue.text = ""
 
     _username = etree.Element('UserName')
     _username.text = 'zm7430nd'
